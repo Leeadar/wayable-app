@@ -40,7 +40,7 @@ const HomeScreen = ()=>{
                 <View style={styles.searchWrapper}>
                     <Feather name="search" size={25} color={colors} />
                     <View style={styles.search}>
-                        <Text style={styles.searchText}> Search? </Text>
+                        <Text style={styles.searchText}> Search </Text>
                     </View>
                 </View>
 
