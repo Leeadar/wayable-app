@@ -1,11 +1,14 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image, FlatList } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, TouchableOpacity,Button } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
 import favoritesData from '../assets/data/favoritesData';
+import highlyRatedData from '../assets/data/highlyRatedData';
+import { NavigationContainer } from '@react-navigation/native';
 
-const HomeScreen = ()=>{
+
+const HomeScreen = ({navigation})=>{
     
     const renderFavoriteItem = ({item}) => {
        return (
@@ -21,7 +24,8 @@ const HomeScreen = ()=>{
 
         </View>
         
-       ); 
+       );
+     
     }
 
     return (
@@ -53,6 +57,8 @@ const HomeScreen = ()=>{
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+
                         />         
                     </View>
                 </View>
@@ -62,18 +68,40 @@ const HomeScreen = ()=>{
                     <Text style={styles.favoritsTitle}> Highly Rated Places: </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                        data={favoritesData}
+                        data={highlyRatedData}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+
                         />         
                     </View>
                 </View>
 
+                    {/* Bottom Buttons */}
                 <View style={styles.homeBottomWrapper}>
-                    <Image source={require('../assets/images/homeIcon.png')} style={styles.homeBottomImage}/>
-                    <Image source={require('../assets/images/locationIcon.png')} style={styles.homeBottomImage}/>
-                    <Image source={require('../assets/images/userIcon.png')} style={styles.homeBottomImage}/>
+                    <Image source={require('../assets/images/homeIcon.png')} style={styles.homeBottomImage}/>                  
+                    <TouchableOpacity
+                            onPress={() => navigation.navigate('MapScreen')}
+                            >
+                         <View style={{ flexDirection: 'row' }}>                          
+                            <Image 
+                            source={require('../assets/images/locationIcon.png')}
+                            style={styles.homeBottomImage}
+                            />
+                         </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                            onPress={() => navigation.navigate('UserScreen')}
+                            >
+                         <View style={{ flexDirection: 'row' }}>                          
+                            <Image 
+                            source={require('../assets/images/userIcon.png')}
+                            style={styles.homeBottomImage}
+                            />
+                         </View>
+                    </TouchableOpacity>
+                    
                 </View>
 
             </View>
