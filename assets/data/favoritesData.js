@@ -21,7 +21,7 @@ const favoritsData = [
         selected: true,
     },
     {
-        id: 4,
+        id: 5,
         image: require('../images/azrieli-mall.png'),
         title: 'Azrieli-BatYam',
         rate: '5',
