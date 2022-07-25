@@ -6,7 +6,10 @@ import ImageDetail from '../components/imageDetail';
 import favoritesData from '../assets/data/favoritesData';
 import highlyRatedData from '../assets/data/highlyRatedData';
 import { NavigationContainer } from '@react-navigation/native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
+
+//navigator.geolocation = require(GEOLOCATION_PACKAGE) // Essential for Current Location feature
 
 const HomeScreen = ({navigation})=>{
     
@@ -42,9 +45,38 @@ const HomeScreen = ({navigation})=>{
 
                 {/* Search Bar */}
                 <View style={styles.searchWrapper}>
-                    <Feather name="search" size={25} color={colors} />
+                    {/* <Feather name="search" size={25} color={colors} /> */}
                     <View style={styles.search}>
-                        <Text style={styles.searchText}> Search </Text>
+                        {/* <Text style={styles.searchText}> Search </Text> */}
+                        <GooglePlacesAutocomplete
+				            placeholder="Search"
+				            fetchDetails={true}
+				            GooglePlacesSearchQuery={{
+					        rankby: "distance"
+				                }}
+				            onPress={(data, details = null) => {
+					// 'details' is provided when fetchDetails = true
+				        	console.log(data, details)
+					        setRegion({
+					        	latitude: details.geometry.location.lat,
+						        longitude: details.geometry.location.lng,
+						        latitudeDelta: 0.0922,
+						        longitudeDelta: 0.0421
+				                	})
+				            }}
+				            query={{
+				        	key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM",
+					        language: "he",
+					        components: "country:il",
+					        types: "establishment",
+					        radius: 30000,
+					
+			            	}}
+				            styles={{
+				            	container: { flex: 0, position: "absolute", width: "100%", zIndex: 1 },
+				            	listView: { backgroundColor: "white" }
+				                    }}
+		            	/>
                     </View>
                 </View>
 
@@ -54,7 +86,7 @@ const HomeScreen = ({navigation})=>{
                     <View style={styles.favoritsList}>
                     <FlatList
                         data={favoritesData}
-                        renderItem={renderFavoriteItem}
+                        renderItem={renderFavoriteItem}ע
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
@@ -129,18 +161,19 @@ const styles = StyleSheet.create({
         marginRight:76,    
     },
     searchWrapper:{
-        hight: 50,
+        hight: 100,
         flexDirection:'row',
         alignItems:'center',
         paddingHorizontal:20,
         marginTop:50,
+        marginBottom:50
             
     },
     search:{
         flex:1,
         marginRight:10,
         borderBottomColor: colors.textLight,
-        borderBottomWidth: 2,        
+       // borderBottomWidth: 2,        
     },
     searchText:{
         marginLeft:5,
