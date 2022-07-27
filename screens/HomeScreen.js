@@ -16,14 +16,16 @@ const HomeScreen = ({navigation})=>{
     const renderFavoriteItem = ({item}) => {
        return (
         <View style={styles.favoritesItemWrapper}>
-            <Image source={item.image} style={styles.favoritesItemImage} />
-            <Text style={styles.favoritesItemText}>{item.title}</Text>
-            <Text>
-                <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Text style={styles.favoritesItemStarText}>{item.rate}</Text> 
-                    <Image source={require('../assets/images/rate.png')} style={styles.favoritesStar} />
-                </View>
-             </Text>
+            <Image 
+                source={item.image}
+                style={styles.favoritesItemImage} />
+             <Text style={styles.favoritesItemText}>{item.title}</Text>
+                <Text>
+                     <View style={{flexDirection:'row', alignItems:'center'}}>
+                        <Text style={styles.favoritesItemStarText}>{item.rate}</Text> 
+                        <Image source={require('../assets/images/rate.png')} style={styles.favoritesStar} />
+                    </View>
+                </Text>
 
         </View>
         
@@ -86,7 +88,7 @@ const HomeScreen = ({navigation})=>{
                     <View style={styles.favoritsList}>
                     <FlatList
                         data={favoritesData}
-                        renderItem={renderFavoriteItem}ע
+                        renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}

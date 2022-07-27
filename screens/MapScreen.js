@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, Dimensions } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, Dimensions,TouchableOpacity } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -8,12 +8,13 @@ import highlyRatedData from '../assets/data/highlyRatedData';
 import MapView, { Callout, Circle, Marker } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
+
 // expo install react-native-maps
 // npm install react-native-google-places-autocomplete --save
 //npm install react-native-geolocation-service ===> for current location (doesnt work yet)
 
 
-const MapScreen = ()=>{
+const MapScreen = ({navigation})=>{
     const [pin,setPin] = React.useState({
         latitude: 32.011261,
         longitude: 34.774811,
@@ -22,6 +23,14 @@ const MapScreen = ()=>{
         latitude: 32.011261,
         longitude: 34.774811,
     })
+    const [name,setName] = React.useState([])
+
+    // React.useEffect(
+    //     ((data)=>data.json()).then((json)=>{
+    //         setName(json.name)
+    //     })
+    //     )
+    
 
     return (
 
@@ -45,17 +54,22 @@ const MapScreen = ()=>{
 				}}
 				onPress={(data, details = null) => {
 					// 'details' is provided when fetchDetails = true
-					console.log(data, details)
+					setName(details["name"])
+                    console.log(details["name"])
+                    console.log(data["description"])
+                    
 					setRegion({
 						latitude: details.geometry.location.lat,
 						longitude: details.geometry.location.lng,
 						latitudeDelta: 0.0922,
 						longitudeDelta: 0.0421
 					})
-				}}
+                    navigation.navigate("PlaceScreen",name)              
+				}}               
+
 				query={{
 					key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM", // My google cloud api (Nati)
-					language: "he",
+					language: "en",
 					components: "country:il",
 					types: "establishment",
 					radius: 30000,
@@ -98,10 +112,49 @@ const MapScreen = ()=>{
                             <Text>I'm right here!</Text>
                         </Callout>
                    </Marker>    
-             
+                    
             </MapView>
+                                          
+            
 
-        </View>
+                        {/* Bottom Buttons */}
+            
+                <View style={{}} >
+                        <TouchableOpacity style={{alignItems:'center',flex:1}}
+                                onPress={() => navigation.navigate('HomeScreen')}
+                                >
+                            <View style={{ flexDirection: 'row' }}>                          
+                                <Image 
+                                source={require('../assets/images/homeIcon.png')}
+                                style={styles.homeBottomImage}
+                                />
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{}}
+                                onPress={() => navigation.navigate('MapScreen')}
+                                >
+                            <View style={{ flexDirection: 'row' }}>                          
+                                <Image 
+                                source={require('../assets/images/locationIcon.png')}
+                                style={styles.homeBottomImage}
+                                />
+                            </View>
+                        </TouchableOpacity >
+                        <TouchableOpacity style={{}}
+                                onPress={() => navigation.navigate('UserScreen')}
+                                >
+                            <View style={styles.userImage}>                          
+                                <Image 
+                                source={require('../assets/images/userIcon.png')}
+                                style={styles.homeBottomImage}
+                                />
+                            </View>
+                        </TouchableOpacity>                   
+                    </View>
+                    
+        
+            </View>
         </View>
     )
 };
@@ -114,8 +167,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     map: {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      width: Dimensions.get('window').width ,
+      height: Dimensions.get('window').height - 300
     },
     headWrapper:{
         justifyContent:'space-between',
@@ -132,6 +185,23 @@ const styles = StyleSheet.create({
         marginRight:76,
      
     },
+    homeBottomWrapper:{
+        marginTop:40,
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    homeBottomImage:{
+        marginLeft:60,
+        
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    userImage:{
+        marginLeft:60,
+        
+        flexDirection:'row',
+        alignItems:'center',
+    }
   });
 
 export default MapScreen;
