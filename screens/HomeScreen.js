@@ -84,7 +84,7 @@ const HomeScreen = ({navigation})=>{
 
                 {/* Favorites */}
                 <View style={styles.favoritsWrapper}>   
-                    <Text style={styles.favoritsTitle}> Favorites: </Text>
+                    <Text style={styles.favoritsTitle}> Favorites </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
                         data={favoritesData}
@@ -98,7 +98,7 @@ const HomeScreen = ({navigation})=>{
                 </View>
                      {/* {TO BE FIXED - CURRENTLY USING FAVORITES COMPONENTS}    */}
                     {/* Highly Rated Places    */}    
-                    <View style={styles.favoritsWrapper}>   
+                <View style={styles.favoritsWrapper}>   
                     <Text style={styles.favoritsTitle}> Highly Rated Places: </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     headWrapper:{
         justifyContent:'space-between',
         paddingHorizontal: 20,
-        paddingTop: 100,
+        paddingTop: 10,
         paddingLeft: 0,
         alignItems:'center',
     },
@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
 
     },
     favoritesItemImage:{
-
         width: 110,
         height: 110,
         marginLeft:18,
@@ -220,12 +219,12 @@ const styles = StyleSheet.create({
         marginLeft:20,
     },
     homeBottomWrapper:{
-        marginTop:40,
+        marginTop:20,
         flexDirection:'row',
         alignItems:'center'
     },
     homeBottomImage:{
-        marginLeft:60,
+        marginLeft:10,
         
         flexDirection:'row',
         alignItems:'center',
