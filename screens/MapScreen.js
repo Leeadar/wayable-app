@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, Dimensions,TouchableOpacity } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, Dimensions,TouchableOpacity,Button } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -7,6 +7,8 @@ import favoritesData from '../assets/data/favoritesData';
 import highlyRatedData from '../assets/data/highlyRatedData';
 import MapView, { Callout, Circle, Marker } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
+
 
 
 // expo install react-native-maps
@@ -15,6 +17,14 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 
 const MapScreen = ({navigation})=>{
+    
+    const [buttonText, setButtonText] = React.useState("Please find a location")
+
+    function doChanges(text) {
+        var ret = "Show '" + text + "'s Detials" 
+        setButtonText(ret);
+
+    }
     const [pin,setPin] = React.useState({
         latitude: 32.011261,
         longitude: 34.774811,
@@ -23,40 +33,39 @@ const MapScreen = ({navigation})=>{
         latitude: 32.011261,
         longitude: 34.774811,
     })
-    const [name,setName] = React.useState([])
+    const [name,setName] = React.useState("Please find a location")
+  
+    const [showButton,setShowButton] = React.useState(true)
 
-    // React.useEffect(
-    //     ((data)=>data.json()).then((json)=>{
-    //         setName(json.name)
-    //     })
-    //     )
-    
 
     return (
 
         <View> 
                      {/* Header Image */}
+
                     <View style={styles.headWrapper}>
                         <Image source={require('../assets/images/Wayable.png')}
-                        style={styles.headImage} />                      
+                        style={styles.headImage} />  
+                        
+                    
                     </View>
              
-       <View style={{marginTop:20,flex: 1}}>
+       <View style={{marginTop:20,flex: 1,marginBottom:40}}>
                                                                             
                      {/* Google Search Bar */}
 
             <GooglePlacesAutocomplete
-                    
+                style={styles.SearchBar}    
 				placeholder="Search"
 				fetchDetails={true}
 				GooglePlacesSearchQuery={{
 					rankby: "distance"
+                    
 				}}
-				onPress={(data, details = null) => {
+                
+				onPress={(data, details=null) => {
 					// 'details' is provided when fetchDetails = true
-					setName(details["name"])
-                    console.log(details["name"])
-                    console.log(data["description"])
+					
                     
 					setRegion({
 						latitude: details.geometry.location.lat,
@@ -64,9 +73,13 @@ const MapScreen = ({navigation})=>{
 						latitudeDelta: 0.0922,
 						longitudeDelta: 0.0421
 					})
-                    navigation.navigate("PlaceScreen",name)              
+                    
+                    setName(details["name"])    
+                    setShowButton(false)
+                    doChanges(details["name"])
+                    
 				}}               
-
+                
 				query={{
 					key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM", // My google cloud api (Nati)
 					language: "en",
@@ -80,8 +93,18 @@ const MapScreen = ({navigation})=>{
 					container: { flex: 0, position: "absolute", width: "100%", zIndex: 1 },
 					listView: { backgroundColor: "white" }
 				}}
-			/>
-
+			/>           
+           </View> 
+        <View>
+           <Button  // Search Button
+                title={buttonText} 
+                disabled={showButton}          
+                onPress={() => {
+                            navigation.navigate('PlaceScreen',{
+                                name:name
+                                })
+                         }}
+            />   
           <MapView style={styles.map} 
               initialRegion={{
                 latitude: 32.011261,
@@ -89,6 +112,7 @@ const MapScreen = ({navigation})=>{
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
+              
               provider="google"
               >
 
@@ -111,10 +135,10 @@ const MapScreen = ({navigation})=>{
                         <Callout>
                             <Text>I'm right here!</Text>
                         </Callout>
-                   </Marker>    
-                    
+                   </Marker>                        
             </MapView>
-                                          
+
+            </View>                              
             
 
                         {/* Bottom Buttons */}
@@ -130,7 +154,7 @@ const MapScreen = ({navigation})=>{
                                 />
                             </View>
                         </TouchableOpacity>
-
+                        
                         <TouchableOpacity style={{}}
                                 onPress={() => navigation.navigate('MapScreen')}
                                 >
@@ -149,15 +173,19 @@ const MapScreen = ({navigation})=>{
                                 source={require('../assets/images/userIcon.png')}
                                 style={styles.homeBottomImage}
                                 />
+
                             </View>
-                        </TouchableOpacity>                   
+                        </TouchableOpacity>    
+                                       
                     </View>
                     
         
-            </View>
+            
         </View>
     )
 };
+
+
 
 const styles = StyleSheet.create({
     container: {      
@@ -168,7 +196,7 @@ const styles = StyleSheet.create({
     },
     map: {
       width: Dimensions.get('window').width ,
-      height: Dimensions.get('window').height - 300
+      height: Dimensions.get('window').height - 400
     },
     headWrapper:{
         justifyContent:'space-between',
@@ -197,10 +225,14 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     userImage:{
-        marginLeft:60,
-        
+        marginLeft:60,        
         flexDirection:'row',
         alignItems:'center',
+    },
+    SearchBar:{
+        borderBottomWidth:40,
+        
+        backgroundColor:"#e0ffff"
     }
   });
 

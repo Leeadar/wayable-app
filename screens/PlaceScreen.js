@@ -6,11 +6,15 @@ import ImageDetail from '../components/imageDetail';
 import favoritesData from '../assets/data/favoritesData';
 import highlyRatedData from '../assets/data/highlyRatedData';
 
-const PlaceScreen = (props)=>{
-    console.log(props)
+const PlaceScreen = ({ route, navigation })=>{
+    const {name} = route.params;
+    console.log(name)
+
+    //console.log("stam")
     return (
-        <View>
-            <Text style={{alignItems:'center',flex:1}}>yooo</Text>
+        <View style={{flex:1,alignItems:'center'}}>
+            <Text style={{fontSize:50}}>  {name} </Text>
+            
         </View>
     )
 };
