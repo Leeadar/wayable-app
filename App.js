@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import MapScreen from './screens/MapScreen';
@@ -9,10 +10,12 @@ import PlaceScreen from './screens/PlaceScreen';
 
 const Stack = createNativeStackNavigator();
 
+// const Tabs = createBottomTabNavigator();
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MapScreen">
+      <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen 
         name="HomeScreen" 
         component={HomeScreen} 

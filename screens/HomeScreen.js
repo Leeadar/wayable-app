@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, TouchableOpacity,Button } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, TouchableOpacity,Button, ScrollView, StatusBar  } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -7,6 +7,7 @@ import favoritesData from '../assets/data/favoritesData';
 import highlyRatedData from '../assets/data/highlyRatedData';
 import { NavigationContainer } from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { YellowBox } from 'react-native-web';
 
 
 //navigator.geolocation = require(GEOLOCATION_PACKAGE) // Essential for Current Location feature
@@ -75,14 +76,16 @@ const HomeScreen = ({navigation})=>{
 					
 			            	}}
 				            styles={{
-				            	container: { flex: 0, position: "absolute", width: "100%", zIndex: 1 },
-				            	listView: { backgroundColor: "white" }
+				            	container: { flex: 0, position: "absolute", width: "100%", zIndex: 1, borderRadius:15},
+				            	listView: { backgroundColor: "green" }
 				                    }}
 		            	/>
                     </View>
                 </View>
-
+                
                 {/* Favorites */}
+                <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.scrollView}>
                 <View style={styles.favoritsWrapper}>   
                     <Text style={styles.favoritsTitle}> Favorites </Text>
                     <View style={styles.favoritsList}>
@@ -99,7 +102,20 @@ const HomeScreen = ({navigation})=>{
                      {/* {TO BE FIXED - CURRENTLY USING FAVORITES COMPONENTS}    */}
                     {/* Highly Rated Places    */}    
                 <View style={styles.favoritsWrapper}>   
-                    <Text style={styles.favoritsTitle}> Highly Rated Places: </Text>
+                    <Text style={styles.favoritsTitle}> Highly Rated Places </Text>
+                    <View style={styles.favoritsList}>
+                    <FlatList
+                        data={highlyRatedData}
+                        renderItem={renderFavoriteItem}
+                        keyExtractor={(item) => item.id}                    
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+
+                        />         
+                    </View>
+                </View>
+                <View style={styles.favoritsWrapper}>   
+                    <Text style={styles.favoritsTitle}> Recommended Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
                         data={highlyRatedData}
@@ -112,32 +128,40 @@ const HomeScreen = ({navigation})=>{
                     </View>
                 </View>
 
+                </ScrollView>
+                </SafeAreaView>
                     {/* Bottom Buttons */}
-                <View style={styles.homeBottomWrapper}>
-                    <Image source={require('../assets/images/homeIcon.png')} style={styles.homeBottomImage}/>                  
-                    <TouchableOpacity
-                            onPress={() => navigation.navigate('MapScreen')}
-                            >
-                         <View style={{ flexDirection: 'row' }}>                          
-                            <Image 
-                            source={require('../assets/images/locationIcon.png')}
-                            style={styles.homeBottomImage}
-                            />
-                         </View>
-                    </TouchableOpacity>
+                <View style={styles.bottomBarWrapper}>
+                    {/* <Image source={require('../assets/images/homeIcon.png')} style={styles.homeBottomImage}/>       */}         
                     <TouchableOpacity
                             onPress={() => navigation.navigate('UserScreen')}
                             >
-                         <View style={{ flexDirection: 'row' }}>                          
+                         <View style={{ flex:1 }}>                          
                             <Image 
                             source={require('../assets/images/userIcon.png')}
-                            style={styles.homeBottomImage}
+                            style={styles.bottomBarIcon}
                             />
                          </View>
                     </TouchableOpacity>
-                    
+                    <TouchableOpacity
+                            onPress={() => navigation.navigate('MapScreen')}
+                            >
+                         <View style={{ flex:1 }}>                          
+                            <Image 
+                            source={require('../assets/images/locationIcon.png')}
+                            style={styles.bottomBarIcon}
+                            />
+                         </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                         <View style={{ flex:1}}>                          
+                            <Image 
+                            source={require('../assets/images/homeIcon.png')}
+                            style={styles.bottomBarIcon}
+                            />
+                         </View>
+                    </TouchableOpacity>   
                 </View>
-
             </View>
     );
 };
@@ -183,51 +207,71 @@ const styles = StyleSheet.create({
         marginBottom:3,
         color: colors.textLight,
     },
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+      },
+    scrollView: {
+        // backgroundColor: 'pink',
+        marginBottom:55
+      },
     favoritsWrapper:{
-        marginTop:32,
+        marginTop:8,
     },
     favoritsTitle:{
         fontSize:24,
-        paddingHorizontal:20,
+        paddingHorizontal:5,
     },
     favoritesItemWrapper:{
-
+        marginRight:10
 
     },
     favoritesItemImage:{
         width: 110,
         height: 110,
-        marginLeft:18,
+        
         marginTop: 10,
         backgroundColor:'#2F80ED',
         borderRadius:10,
         alignSelf:'center',
     },
     favoritesItemText:{
-        marginLeft:18,
+        marginLeft:7,
         alignSelf:'center',
 
     },
     favoritesItemStarText:{
-        marginLeft:20,
+        marginLeft:7,
         marginBottom: 0,
-        
-     
 
     },
     favoritesStar:{
-        marginLeft:20,
+        marginLeft:7,
     },
-    homeBottomWrapper:{
-        marginTop:20,
+    bottomBarWrapper:{
+        // marginTop:15,
+        position:'absolute',
+        bottom:0,
         flexDirection:'row',
-        alignItems:'center'
+        left: 20,
+        right: 20,
+        elevation:0,
+        backgroundColor:'#FAFAFA',
+        borderRadius:15,
+        height:55,
+        // alignItems:'center',
+        justifyContent: 'space-evenly',
     },
-    homeBottomImage:{
-        marginLeft:10,
+    bottomBarIcon:{
         
-        flexDirection:'row',
-        alignItems:'center',
+        
+        
+        // paddingLeft: 8,
+        // flex: 1,
+        top: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // justifyContent: 'flex-start'
     }
         
     
