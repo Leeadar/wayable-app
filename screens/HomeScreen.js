@@ -8,6 +8,7 @@ import highlyRatedData from '../assets/data/highlyRatedData';
 import { NavigationContainer } from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { YellowBox } from 'react-native-web';
+import recommendedPlaces from '../assets/data/RecommendedPlaces';
 
 
 //navigator.geolocation = require(GEOLOCATION_PACKAGE) // Essential for Current Location feature
@@ -28,10 +29,8 @@ const HomeScreen = ({navigation})=>{
                     </View>
                 </Text>
 
-        </View>
-        
+        </View>       
        );
-     
     }
 
     return (
@@ -90,6 +89,7 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Favorites </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
+                        inverted
                         data={favoritesData}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
@@ -105,6 +105,7 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Highly Rated Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
+                        inverted
                         data={highlyRatedData}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
@@ -118,7 +119,8 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Recommended Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                        data={highlyRatedData}
+                        inverted
+                        data={recommendedPlaces}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
@@ -223,7 +225,9 @@ const styles = StyleSheet.create({
         paddingHorizontal:5,
     },
     favoritesItemWrapper:{
-        marginRight:10
+        marginRight:10,
+        justifyContent:'center'
+        
 
     },
     favoritesItemImage:{
@@ -238,6 +242,7 @@ const styles = StyleSheet.create({
     favoritesItemText:{
         marginLeft:7,
         alignSelf:'center',
+        flex:1
 
     },
     favoritesItemStarText:{
