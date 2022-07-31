@@ -10,7 +10,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { YellowBox } from 'react-native-web';
 import recommendedPlaces from '../assets/data/RecommendedPlaces';
 
-
+// check git
 //navigator.geolocation = require(GEOLOCATION_PACKAGE) // Essential for Current Location feature
 
 const HomeScreen = ({navigation})=>{
