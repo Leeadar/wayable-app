@@ -26,17 +26,27 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [stairs_alternative, setStairs] = React.useState(''); 
     const [toilets, setToilets] = React.useState(''); 
     const [parking, setParking] = React.useState('');
-
+    const [numOfRatings, setNumOfRatings] = React.useState('');
+    const [averageRating, setAverageRating] = React.useState('');
+    
 
     // Suppose to add a new place to DB with , default values will be -1 , So the first rating will not calculate average with -1 value.
-    function createData() {
-        console.log("ok")
-        set(ref(db, 'users/' + username), {          
-                username: username,
-                email: email  
+    function createData(placeName) {
+        set(ref(db, 'places/' + placeName), {          
+            place_id: placeName,
+            door_access: 0,  
+            parking:0,
+            stairs_alternative:0,
+            way_to_place:0,
+            toilets:0,
+            wheelchair_access:0,
+            numOfRatings:0,
+            averageRating:0,
+            
                     }).then(() => {
-                      // Data saved successfully!
-                      alert('data updated!');    
+                      console.log("added data of:")
+                      console.log(placeName)
+                      alert('Added new place to our database!');    
                   })  
                       .catch((error) => {
                           // The write failed...
@@ -44,7 +54,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
                       });
     }
 
-    console.log(replaced) // will print the fixed place name
+   // console.log(replaced) // will print the fixed place name
 
 
     // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
@@ -52,28 +62,29 @@ const  PlaceScreen =  ({ route, navigation })=>{
         const placeRef = ref(db, 'places/' + replaced);
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
-            setPlace(data.place_id)
-            setDoor(data.door_access)
-            setParking(data.parking)
-            setStairs(data.stairs_alternative)
-            setWay(data.way_to_place)
-            setToilets(data.toilets)
-            setWheelchair(data.wheelchair_access)
+            if(data != null){
+                setPlace(data.place_id)
+                setDoor(data.door_access)
+                setParking(data.parking)
+                setStairs(data.stairs_alternative)
+                setWay(data.way_to_place)
+                setToilets(data.toilets)
+                setWheelchair(data.wheelchair_access)
+                setAverageRating(data.averageRating)
+                setNumOfRatings(data.numOfRatings)
+                console.log("successfuly retrieved " + place_id )
+            }
+            else{
+                console.log("Need to update")
+                
+                createData(replaced)
+            }
         });
     }
 
-   React.useEffect(()=>{
-    readData()
-   })
-
-    
-
-
+  React.useEffect(()=>{ readData()},[])
     
     return (
-
-        
-
         <View on style={styles.container}>
                          
 
@@ -84,8 +95,9 @@ const  PlaceScreen =  ({ route, navigation })=>{
                 <Text>Door access rate: {door_access}</Text>
                 <Text>Stairs alternative rate: {stairs_alternative}</Text>
                 <Text>Toilets rate: {toilets}</Text> 
-                <Button title="submit" 
-                onPress={readData}> </Button>    
+                <Text>number of ratings: {numOfRatings}</Text> 
+                <Text>Average rating: {averageRating}</Text> 
+                 
 
         </View>
     )
