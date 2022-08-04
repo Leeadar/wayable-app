@@ -10,13 +10,15 @@ import { getDatabase, ref, set, onValue, update } from "firebase/database";
 
 
 
-
+// Recieve place id as parameter
 const  PlaceScreen =  ({ route, navigation })=>{
 
+    // replace ' ' with '_' in place's name (for example:"Azrieli Mall" => "Azrieli_Mall")
     const {name} = route.params;
     var str = name;
     var replaced = str.split(' ').join('_');
     
+    // Set all ratings state
     const [place,setPlace] = React.useState('')
     const [wheelchair_access, setWheelchair] = React.useState(''); 
     const [way_to_place, setWay] = React.useState(''); 
@@ -25,6 +27,8 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [toilets, setToilets] = React.useState(''); 
     const [parking, setParking] = React.useState('');
 
+
+    // Suppose to add a new place to DB with , default values will be -1 , So the first rating will not calculate average with -1 value.
     function createData() {
         console.log("ok")
         set(ref(db, 'users/' + username), {          
@@ -40,11 +44,13 @@ const  PlaceScreen =  ({ route, navigation })=>{
                       });
     }
 
-    console.log(replaced)
+    console.log(replaced) // will print the fixed place name
 
+
+    // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
     function readData(){
-        const starCountRef = ref(db, 'places/' + replaced);
-        onValue(starCountRef, (snapshot) => {
+        const placeRef = ref(db, 'places/' + replaced);
+        onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             setPlace(data.place_id)
             setDoor(data.door_access)
@@ -70,12 +76,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
         <View on style={styles.container}>
                          
-                {/* <TextInput 
-                    value={place}
-                    onChangeTExt={(placee) => {setPlace(place)}}
-                    placeholder="here" 
-                    style={styles.textbox}>
-                </TextInput> */}
+
                 <Text>Name: {place}</Text> 
                 <Text>Parking rate: {parking}</Text> 
                 <Text>Wheelchair access rate: {wheelchair_access}</Text> 
@@ -83,8 +84,6 @@ const  PlaceScreen =  ({ route, navigation })=>{
                 <Text>Door access rate: {door_access}</Text>
                 <Text>Stairs alternative rate: {stairs_alternative}</Text>
                 <Text>Toilets rate: {toilets}</Text> 
-                {/* <TextInput value={place} onChangeText={(place) => {setName(place)}} placeholder="place" style={styles.textBoxes}></TextInput> */}
-                {/* <TextInput value={parking} onChangeText={(parking) => {setParking(parking)}} placeholder="parking" style={styles.textBoxes}></TextInput> */}
                 <Button title="submit" 
                 onPress={readData}> </Button>    
 
