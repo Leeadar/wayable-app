@@ -95,11 +95,11 @@ const MapScreen = ({navigation})=>{
 			/>           
            </View> 
         <View>
-           <Button  // Search Button
+           <Button  // move to place Button
                 title={buttonText} 
                 disabled={showButton}          
                 onPress={() => {
-                            navigation.navigate('PlaceScreen',{
+                            navigation.navigate("Place",{
                                 name:name
                                 })
                          }}
@@ -154,12 +154,12 @@ const styles = StyleSheet.create({
     },
     map: {
       width: Dimensions.get('window').width ,
-      height: Dimensions.get('window').height - 300
+      height: Dimensions.get('window').height - 250
     },
     headWrapper:{
         justifyContent:'space-between',
         paddingHorizontal: 10,
-        paddingTop: 0,
+        paddingTop: 24,
         paddingLeft: 0,
         alignItems:'center',
     },

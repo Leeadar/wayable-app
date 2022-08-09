@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
       },
     scrollView: {
         // backgroundColor: 'pink',
-        marginBottom:15
+        marginBottom:2
       },
     favoritsWrapper:{
         marginTop:8,
@@ -221,31 +221,6 @@ const styles = StyleSheet.create({
     favoritesStar:{
         marginLeft:7,
     },
-    bottomBarWrapper:{
-        // marginTop:15,
-        position:'absolute',
-        bottom:0,
-        flexDirection:'row',
-        left: 20,
-        right: 20,
-        elevation:0,
-        backgroundColor:'#FAFAFA',
-        borderRadius:15,
-        height:55,
-        // alignItems:'center',
-        justifyContent: 'space-evenly',
-    },
-    bottomBarIcon:{
-        
-        
-        
-        // paddingLeft: 8,
-        // flex: 1,
-        top: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // justifyContent: 'flex-start'
-    }
         
     
 });
