@@ -42,13 +42,15 @@ export default function App() {
           activeTintColor: '#2F80ED',
           inactiveTintColor: 'grey',
           "tabBarLabelStyle": {"paddingBottom": 1,"fontSize": 10 },
-          // "tabBarStyle": [{"display": "flex"},null],
+          tabBarHideOnKeyboard:true,
+          "tabBarStyle": [{"display": "flex", backgroundColor:"#FAFAFA"},null],
           
         })}>
 
         <Tab.Screen name={userName} component={UserScreen} />
         <Tab.Screen name={mapName} component={MapScreen} />
         <Tab.Screen name={homeName} component={HomeScreen} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );

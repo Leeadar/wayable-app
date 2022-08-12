@@ -9,7 +9,10 @@ import MapView, { Callout, Circle, Marker } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
+//import Geolocation from '@react-native-community/geolocation';
 
+//Geolocation.getCurrentPosition(info => console.log(info));
+//navigator.geolocation = require('react-native-geolocation-service');
 
 // expo install react-native-maps
 // npm install react-native-google-places-autocomplete --save
@@ -32,15 +35,16 @@ const MapScreen = ({navigation})=>{
     const [region,setRegion] = React.useState({
         latitude: 32.011261,
         longitude: 34.774811,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
     })
     const [name,setName] = React.useState("Please find a location")
   
     const [showButton,setShowButton] = React.useState(true)
 
-
     return (
 
-        <View> 
+        <View > 
                      {/* Header Image */}
 
                     <View style={styles.headWrapper}>
@@ -57,11 +61,11 @@ const MapScreen = ({navigation})=>{
                 style={styles.SearchBar}    
 				placeholder="Search"
 				fetchDetails={true}
+                enablePoweredByContainer={false}
 				GooglePlacesSearchQuery={{
 					rankby: "distance"
                     
 				}}
-                
 				onPress={(data, details=null) => {
 					// 'details' is provided when fetchDetails = true
 					
@@ -73,6 +77,13 @@ const MapScreen = ({navigation})=>{
 						longitudeDelta: 0.0421
 					})
                     
+                    setPin({
+						latitude: details.geometry.location.lat,
+						longitude: details.geometry.location.lng,
+						latitudeDelta: 0.0922,
+						longitudeDelta: 0.0421
+					})
+
                     setName(details["name"])    
                     setShowButton(false)
                     doChanges(details["name"])
@@ -86,8 +97,11 @@ const MapScreen = ({navigation})=>{
 					types: "establishment",
 					radius: 30000,
                     location:`${region.latitude}, ${region.longitude}`              					
-				    }}
-            
+                }}
+
+                // currentLocation={true}
+                // currentLocationLabel='Current location'
+
 				styles={{
 					container: { flex: 0, position: "absolute", width: "100%", zIndex: 1 },
 					listView: { backgroundColor: "white" }
@@ -105,19 +119,22 @@ const MapScreen = ({navigation})=>{
                          }}
             />   
           <MapView style={styles.map} 
-              initialRegion={{
-                latitude: 32.011261,
-                longitude:  34.774811,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-              
+            //   initialRegion={{
+            //     latitude: 32.011261,
+            //     longitude:  34.774811,
+            //     latitudeDelta: 0.0922,
+            //     longitudeDelta: 0.0421,
+            //   }}
+              region={region}
               provider="google"
+              onRegionChangeComplete={setRegion}
               >
-
-                <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
-
+                
                 <Marker 
+                    coordinate={{ latitude: pin.latitude, longitude: pin.longitude }}
+                     />
+
+                {/* <Marker 
                     coordinate={pin}
                     pinColor="blue"
                     draggable={true}
@@ -134,7 +151,7 @@ const MapScreen = ({navigation})=>{
                         <Callout>
                             <Text>I'm right here!</Text>
                         </Callout>
-                   </Marker>                        
+                   </Marker>                         */}
             </MapView>
 
             </View>                              
@@ -176,7 +193,6 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     SearchBar:{
-        borderBottomWidth:100,
         backgroundColor:"#e0ffff"
     },
         
