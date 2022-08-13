@@ -21,7 +21,6 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName={homeName}
-        backBehavior={homeName}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -49,9 +48,9 @@ export default function App() {
           
         })}>
 
-        <Tab.Screen name={userName} component={UserScreen}/>
-        <Tab.Screen name={mapName} component={MapScreen} />
         <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={mapName} component={MapScreen} />
+        <Tab.Screen name={userName} component={UserScreen}/>
         <Tab.Screen name={placeName} component={PlaceScreen}       
             options={() => ({
                 tabBarButton: () => null,
