@@ -8,8 +8,8 @@ import highlyRatedData from '../assets/data/highlyRatedData';
 
 const UserScreen = ()=>{
     return (
-        <View>
-            <Text>GOOD</Text>
+        <View  style={{marginTop:60, alignItems:'center'}}> 
+            <Text style={{fontSize:50}}>User Screen</Text>
         </View>
     )
 };

@@ -50,10 +50,9 @@ const MapScreen = ({navigation})=>{
                     
                     </View>
              
-       <View style={{marginTop:20,flex: 1,marginBottom:40}}>
+       <View style={{marginTop:30,flex: 1,marginBottom:45}}>
                                                                             
                      {/* Google Search Bar */}
-
             <GooglePlacesAutocomplete
                 style={styles.SearchBar}    
 				placeholder="Search"
@@ -96,11 +95,11 @@ const MapScreen = ({navigation})=>{
 			/>           
            </View> 
         <View>
-           <Button  // Search Button
+           <Button  // move to place Button
                 title={buttonText} 
                 disabled={showButton}          
                 onPress={() => {
-                            navigation.navigate('PlaceScreen',{
+                            navigation.navigate("Place",{
                                 name:name
                                 })
                          }}
@@ -139,49 +138,8 @@ const MapScreen = ({navigation})=>{
             </MapView>
 
             </View>                              
-            
-
-                        {/* Bottom Buttons */}
-            
-                <View style={{}} >
-                        <TouchableOpacity style={{alignItems:'center',flex:1}}
-                                onPress={() => navigation.navigate('HomeScreen')}
-                                >
-                            <View style={{ flexDirection: 'row' }}>                          
-                                <Image 
-                                source={require('../assets/images/homeIcon.png')}
-                                style={styles.homeBottomImage}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity style={{}}
-                                onPress={() => navigation.navigate('MapScreen')}
-                                >
-                            <View style={{ flexDirection: 'row' }}>                          
-                                <Image 
-                                source={require('../assets/images/locationIcon.png')}
-                                style={styles.homeBottomImage}
-                                />
-                            </View>
-                        </TouchableOpacity >
-                        <TouchableOpacity style={{}}
-                                onPress={() => navigation.navigate('UserScreen')}
-                                >
-                            <View style={styles.userImage}>                          
-                                <Image 
-                                source={require('../assets/images/userIcon.png')}
-                                style={styles.homeBottomImage}
-                                />
-
-                            </View>
-                        </TouchableOpacity>    
-                                       
-                    </View>
-                    
-        
-            
         </View>
+        
     )
 };
 
@@ -196,44 +154,32 @@ const styles = StyleSheet.create({
     },
     map: {
       width: Dimensions.get('window').width ,
-      height: Dimensions.get('window').height - 400
+      height: Dimensions.get('window').height - 250
     },
     headWrapper:{
         justifyContent:'space-between',
-        paddingHorizontal: 20,
-        paddingTop: 100,
+        paddingHorizontal: 10,
+        paddingTop: 24,
         paddingLeft: 0,
         alignItems:'center',
     },
     headImage:{
         width: 223,
         height: 38,
-        marginTop:10,
+        marginTop:28,
         marginLeft:76,
-        marginRight:76,
-     
+        marginRight:76,    
     },
     homeBottomWrapper:{
         marginTop:40,
         flexDirection:'row',
         alignItems:'center'
     },
-    homeBottomImage:{
-        marginLeft:60,
-        
-        flexDirection:'row',
-        alignItems:'center',
-    },
-    userImage:{
-        marginLeft:60,        
-        flexDirection:'row',
-        alignItems:'center',
-    },
     SearchBar:{
-        borderBottomWidth:40,
-        
+        borderBottomWidth:100,
         backgroundColor:"#e0ffff"
-    }
+    },
+        
   });
 
 export default MapScreen;

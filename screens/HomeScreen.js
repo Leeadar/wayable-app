@@ -132,38 +132,6 @@ const HomeScreen = ({navigation})=>{
 
                 </ScrollView>
                 </SafeAreaView>
-                    {/* Bottom Buttons */}
-                <View style={styles.bottomBarWrapper}>
-                    {/* <Image source={require('../assets/images/homeIcon.png')} style={styles.homeBottomImage}/>       */}         
-                    <TouchableOpacity
-                            onPress={() => navigation.navigate('UserScreen')}
-                            >
-                         <View style={{ flex:1 }}>                          
-                            <Image 
-                            source={require('../assets/images/userIcon.png')}
-                            style={styles.bottomBarIcon}
-                            />
-                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                            onPress={() => navigation.navigate('MapScreen')}
-                            >
-                         <View style={{ flex:1 }}>                          
-                            <Image 
-                            source={require('../assets/images/locationIcon.png')}
-                            style={styles.bottomBarIcon}
-                            />
-                         </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-                         <View style={{ flex:1}}>                          
-                            <Image 
-                            source={require('../assets/images/homeIcon.png')}
-                            style={styles.bottomBarIcon}
-                            />
-                         </View>
-                    </TouchableOpacity>   
-                </View>
             </View>
     );
 };
@@ -176,8 +144,8 @@ const styles = StyleSheet.create({
     },
     headWrapper:{
         justifyContent:'space-between',
-        paddingHorizontal: 20,
-        paddingTop: 10,
+        paddingHorizontal: 10,
+        paddingTop: 0,
         paddingLeft: 0,
         alignItems:'center',
     },
@@ -193,14 +161,14 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         paddingHorizontal:20,
-        marginTop:50,
-        marginBottom:50
+        marginTop:30,
+        marginBottom:50,
             
     },
     search:{
         flex:1,
         marginRight:10,
-        borderBottomColor: colors.textLight,
+        borderBottomColor: colors.textLight, 
        // borderBottomWidth: 2,        
     },
     searchText:{
@@ -215,7 +183,7 @@ const styles = StyleSheet.create({
       },
     scrollView: {
         // backgroundColor: 'pink',
-        marginBottom:55
+        marginBottom:2
       },
     favoritsWrapper:{
         marginTop:8,
@@ -253,31 +221,6 @@ const styles = StyleSheet.create({
     favoritesStar:{
         marginLeft:7,
     },
-    bottomBarWrapper:{
-        // marginTop:15,
-        position:'absolute',
-        bottom:0,
-        flexDirection:'row',
-        left: 20,
-        right: 20,
-        elevation:0,
-        backgroundColor:'#FAFAFA',
-        borderRadius:15,
-        height:55,
-        // alignItems:'center',
-        justifyContent: 'space-evenly',
-    },
-    bottomBarIcon:{
-        
-        
-        
-        // paddingLeft: 8,
-        // flex: 1,
-        top: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // justifyContent: 'flex-start'
-    }
         
     
 });
