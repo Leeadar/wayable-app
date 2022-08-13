@@ -54,7 +54,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
                       });
     }
 
-   // console.log(replaced) // will print the fixed place name
+    console.log(replaced) // will print the fixed place name
 
 
     // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
@@ -84,7 +84,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
         });
     }
 
-  React.useEffect(()=>{ readData()},[])
+  React.useEffect(()=>{ readData()})
     
     return (
         <View on style={styles.container}>
