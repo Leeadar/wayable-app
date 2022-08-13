@@ -10,6 +10,7 @@ import PlaceScreen from './screens/PlaceScreen';
 
 const Tab = createBottomTabNavigator();
 
+
 const homeName = "Home";
 const mapName = "Map";
 const userName = "User";
@@ -20,6 +21,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName={homeName}
+        backBehavior={homeName}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -42,13 +44,20 @@ export default function App() {
           activeTintColor: '#2F80ED',
           inactiveTintColor: 'grey',
           "tabBarLabelStyle": {"paddingBottom": 1,"fontSize": 10 },
-          // "tabBarStyle": [{"display": "flex"},null],
+          tabBarHideOnKeyboard:true,
+          "tabBarStyle": [{"display": "flex", backgroundColor:"#FAFAFA"},null],
           
         })}>
 
-        <Tab.Screen name={userName} component={UserScreen} />
+        <Tab.Screen name={userName} component={UserScreen}/>
         <Tab.Screen name={mapName} component={MapScreen} />
         <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={placeName} component={PlaceScreen}       
+            options={() => ({
+                tabBarButton: () => null,
+            })}
+        />
+
       </Tab.Navigator>
     </NavigationContainer>
   );

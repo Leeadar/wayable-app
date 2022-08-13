@@ -10,6 +10,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { YellowBox } from 'react-native-web';
 import recommendedPlaces from '../assets/data/RecommendedPlaces';
 
+
 // check git
 //navigator.geolocation = require(GEOLOCATION_PACKAGE) // Essential for Current Location feature
 
@@ -49,7 +50,6 @@ const HomeScreen = ({navigation})=>{
                 <View style={styles.searchWrapper}>
                     {/* <Feather name="search" size={25} color={colors} /> */}
                     <View style={styles.search}>
-                        {/* <Text style={styles.searchText}> Search </Text> */}
                         <GooglePlacesAutocomplete
 				            placeholder="Search"
 				            fetchDetails={true}
@@ -75,9 +75,10 @@ const HomeScreen = ({navigation})=>{
 					
 			            	}}
 				            styles={{
-				            	container: { flex: 0, position: "absolute", width: "100%", zIndex: 1, borderRadius:15},
-				            	listView: { backgroundColor: "green" }
-				                    }}
+				            	container: { flex: 0, position: "absolute", width: "100%", zIndex: 1},
+				            	listView: { backgroundColor: "black" },
+                                textInput: {height:50,backgroundColor:"#F6F6F6", fontSize: 16, borderRadius:30},
+                                    }}
 		            	/>
                     </View>
                 </View>
@@ -139,9 +140,11 @@ const HomeScreen = ({navigation})=>{
 
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1
-    },
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+        backgroundColor:"#FFFFFF"
+      },
     headWrapper:{
         justifyContent:'space-between',
         paddingHorizontal: 10,
@@ -163,12 +166,14 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         marginTop:30,
         marginBottom:50,
+        backgroundColor:"yellow"
             
     },
     search:{
         flex:1,
         marginRight:10,
-        borderBottomColor: colors.textLight, 
+        borderBottomColor: colors.textLight,
+        borderColor:colors.black
        // borderBottomWidth: 2,        
     },
     searchText:{
@@ -177,10 +182,6 @@ const styles = StyleSheet.create({
         marginBottom:3,
         color: colors.textLight,
     },
-    container: {
-        flex: 1,
-        paddingTop: StatusBar.currentHeight,
-      },
     scrollView: {
         // backgroundColor: 'pink',
         marginBottom:2
