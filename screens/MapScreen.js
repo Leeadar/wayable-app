@@ -66,6 +66,7 @@ const MapScreen = ({navigation})=>{
 					rankby: "distance"
                     
 				}}
+                
 				onPress={(data, details=null) => {
 					// 'details' is provided when fetchDetails = true
 					
@@ -87,6 +88,7 @@ const MapScreen = ({navigation})=>{
                     setName(details["name"])    
                     setShowButton(false)
                     doChanges(details["name"])
+                    
                     
 				}}               
                 
