@@ -19,9 +19,12 @@ const HomeScreen = ({navigation})=>{
     const renderFavoriteItem = ({item}) => {
        return (
         <View style={styles.favoritesItemWrapper}>
-            <Image 
-                source={item.image}
-                style={styles.favoritesItemImage} />
+            <TouchableOpacity 
+                    // onPress={()=>{
+                    // console.log(item.title)
+                    // navigation.navigate("Place",{name:item.title})}}
+            >
+            <Image source={item.image} style={styles.favoritesItemImage} />
              <Text style={styles.favoritesItemText}>{item.title}</Text>
                 <Text>
                      <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -29,6 +32,7 @@ const HomeScreen = ({navigation})=>{
                         <Image source={require('../assets/images/rate.png')} style={styles.favoritesStar} />
                     </View>
                 </Text>
+            </TouchableOpacity>
 
         </View>       
        );
