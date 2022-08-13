@@ -63,6 +63,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             if(data != null){
+                
                 setPlace(data.place_id)
                 setDoor(data.door_access)
                 setParking(data.parking)
@@ -72,7 +73,8 @@ const  PlaceScreen =  ({ route, navigation })=>{
                 setWheelchair(data.wheelchair_access)
                 setAverageRating(data.averageRating)
                 setNumOfRatings(data.numOfRatings)
-                console.log("successfuly retrieved " + place_id )
+               // console.log("successfuly retrieved " + place_id )
+                
             }
             else{
                 console.log("Need to update")
