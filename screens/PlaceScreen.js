@@ -88,22 +88,6 @@ const  PlaceScreen =  ({ route, navigation })=>{
   React.useEffect(()=>{ readData()})
     
     return (
-        // <View on style={styles.container}>
-                         
-
-        //         <Text>Name: {place}</Text> 
-        //         <Text>Parking rate: {parking}</Text> 
-        //         <Text>Wheelchair access rate: {wheelchair_access}</Text> 
-        //         <Text>Way to place rate: {way_to_place}</Text>
-        //         <Text>Door access rate: {door_access}</Text>
-        //         <Text>Stairs alternative rate: {stairs_alternative}</Text>
-        //         <Text>Toilets rate: {toilets}</Text> 
-        //         <Text>number of ratings: {numOfRatings}</Text> 
-        //         <Text>Average rating: {averageRating}</Text> 
-                 
-
-        // </View>
-
 
         <View>
                {/* Header */}
