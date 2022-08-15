@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import MapScreen from './screens/MapScreen';
 import UserScreen from './screens/UserScreen';
 import PlaceScreen from './screens/PlaceScreen';
+import RatingScreen from './screens/RatingScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,6 +16,7 @@ const homeName = "Home";
 const mapName = "Map";
 const userName = "User";
 const placeName = "Place";
+const ratingName = "Rating";
 
 export default function App() {
   return (
@@ -56,6 +58,11 @@ export default function App() {
                 tabBarButton: () => null,
             })}
         />
+      <Tab.Screen name={ratingName} component={RatingScreen}
+            options={() => ({
+                tabBarButton: () => null,
+            })}
+      />
 
       </Tab.Navigator>
     </NavigationContainer>
