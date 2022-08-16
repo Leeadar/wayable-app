@@ -61,6 +61,7 @@ export default function App() {
       <Tab.Screen name={ratingName} component={RatingScreen}
             options={() => ({
                 tabBarButton: () => null,
+                tabBarStyle: { display: "none" },
             })}
       />
 

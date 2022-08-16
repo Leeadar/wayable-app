@@ -12,11 +12,16 @@ class RatingAccessibility extends Component {
   }
  
   onStarRatingPress(rating) {
+    
     this.setState({
       starCount: rating
     });
   }
  
+  onSubmitPress() {
+      this.props.setStarRating(this.state.starCount, this.props.setRatingItem)
+  }
+
   render() {
     return (
       <View>
@@ -31,9 +36,10 @@ class RatingAccessibility extends Component {
           />
           <View style={styles.button}>
             <Button 
-              onPress={() => this.props.setStarRating(this.state.starCount, this.props.setRatingItem)}
+              onPress={() => this.onSubmitPress()}
               color={"#2D9CDB"}
-              title="Submit">
+              disabled={(this.state.starCount > 0) ? false : true}
+              title="Next">
           </Button> 
           </View>      
        

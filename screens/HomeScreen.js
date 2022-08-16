@@ -22,8 +22,7 @@ const HomeScreen = ({navigation})=>{
             <TouchableOpacity 
                     onPress={()=>{
                     console.log(item.title)
-                    //navigation.navigate("Place",{name:item.title})}}
-                    navigation.navigate("Rating")}}
+                    navigation.navigate("Place",{name:item.title})}}
             >
             <Image source={item.image} style={styles.favoritesItemImage} />
              <Text style={styles.favoritesItemText}>{item.title}</Text>
