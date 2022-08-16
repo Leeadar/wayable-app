@@ -55,6 +55,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
                       });
     }
 
+
     //console.log(replaced) // will print the fixed place name
 
 
@@ -113,6 +114,13 @@ const  PlaceScreen =  ({ route, navigation })=>{
                     </View>
                     <View>
                         <Image style={styles.ratingImage} source={require('../assets/images/rate.png')}></Image>
+                    </View>
+
+                    <View>
+                    <Button  // rate this place
+                        title="Rate This Place"         
+                        onPress={() => {navigation.navigate("Rating",{key:name, name:name})}}
+                    />  
                     </View>
                 </View>
 

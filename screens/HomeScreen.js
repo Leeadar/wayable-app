@@ -20,9 +20,9 @@ const HomeScreen = ({navigation})=>{
        return (
         <View style={styles.favoritesItemWrapper}>
             <TouchableOpacity 
-                    // onPress={()=>{
-                    // console.log(item.title)
-                    // navigation.navigate("Place",{name:item.title})}}
+                    onPress={()=>{
+                    console.log(item.title)
+                    navigation.navigate("Place",{name:item.title})}}
             >
             <Image source={item.image} style={styles.favoritesItemImage} />
              <Text style={styles.favoritesItemText}>{item.title}</Text>
@@ -94,7 +94,6 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Favorites </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                        inverted
                         data={favoritesData}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
