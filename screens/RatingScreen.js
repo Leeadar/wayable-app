@@ -6,6 +6,7 @@ import ImageDetail from '../components/imageDetail';
 import favoritesData from '../assets/data/favoritesData';
 import highlyRatedData from '../assets/data/highlyRatedData';
 import { db } from '../Core/Config';
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
 import RatingAccessibility from '../components/RatingAccessibility';
 
 const RatingScreen = ({ route, navigation })=>{
@@ -13,14 +14,24 @@ const RatingScreen = ({ route, navigation })=>{
     var str = name;
     var replacedPlaceName = str.split(' ').join('_');
 
-    const [parkingStars, setParkingStars] = React.useState('0');
-    const [wheelchairStars, setWheelchairStars] = React.useState('0');
-    const [stairsStars, setStairsStars] = React.useState('0');
-    const [toiletStars, setToiletStars] = React.useState('0');
+    const [parkingStars, setParkingStars] = React.useState(0);
+    const [wheelchairStars, setWheelchairStars] = React.useState(0);
+    const [stairsStars, setStairsStars] = React.useState(0);
+    const [toiletStars, setToiletStars] = React.useState(0);
+
+    // Set all ratings state
+    const [wheelchair_access, setWheelchair] = React.useState(0); 
+    const [way_to_place, setWay] = React.useState(0); 
+    const [door_access, setDoor] = React.useState(0); 
+    const [stairs_alternative, setStairs] = React.useState(0); 
+    const [toilets, setToilets] = React.useState(0); 
+    const [parking, setParking] = React.useState(0);
+    const [numOfRatings, setNumOfRatings] = React.useState(0);
+    const [averageRating, setAverageRating] = React.useState(0);
 
     const [ratingIndex, setRatingIndex] = React.useState(0);
     const [showingRatingAccessibility, setShowingRatingAccessibility] = React.useState(true);
-    const [currentName, setCurrentName] = React.useState('');
+
 
     const ratings = [
         {
@@ -43,43 +54,84 @@ const RatingScreen = ({ route, navigation })=>{
     
     var currentRatingAccessibility = ratings[ratingIndex];
 
-    
-    const setData = () => {
+    const getAvgValue = (currentAvg, newValue)=> {
+        console.log({currentAvg})
+        console.log({toiletStars})
+        return (currentAvg + newValue) / numOfRatings;
+    }
 
-        ///need to read data, calculate the new data, and set data
+
+    const printData = () =>{
+        console.log({wheelchair_access}, {stairs_alternative}, {toilets}, {parking})
+    }
 
 
-        // set(ref(db, 'places/' + replacedPlaceName), {          
-        //     // door_access: 0,  
-        //     parking:parkingStars,
-        //     stairs_alternative:0,
-        //     way_to_place:0,
-        //     toilets:0,
-        //     wheelchair_access:0,
-        //     numOfRatings:0,
-        //     averageRating:0,
-        //     // numOfRatings:0,
-        //     // averageRating:0,
+    const setPlaceData = () => {
+
+        readData()
+        printData()
+        setNumOfRatings(numOfRatings + 1)
+        
+        setParking(getAvgValue(parking, parkingStars))
+        setStairs(getAvgValue(stairs_alternative, stairsStars))
+        setToilets(getAvgValue(toilets, toiletStars))
+        setWheelchair(getAvgValue(wheelchair_access, wheelchairStars))
+        
+
+        update(ref(db, 'places/' + replacedPlaceName), {          
+            // door_access: 0,  
+            parking:parking,
+            stairs_alternative:stairs_alternative,
+            way_to_place:0,
+            toilets:toilets,
+            wheelchair_access:wheelchair_access,
+            numOfRatings:0,
+            averageRating:0,
+            // numOfRatings:0,
+            // averageRating:0,
             
-        //             }).then(() => {
-        //               console.log("set data of:")
-        //               console.log(placeName)
-        //           })  
-        //               .catch((error) => {
-        //                   // The write failed...
-        //                   alert(error);
-        //               });
+                    }).then(() => {
+                      console.log("set data of:")
+                      console.log(replacedPlaceName) 
+                  })  
+                      .catch((error) => {
+                          // The write failed...
+                          alert(error);
+                      });
     }
     
+    function readData(){
+        const placeRef = ref(db, 'places/' + replacedPlaceName);
+        onValue(placeRef, (snapshot) => {
+            const data = snapshot.val();
+            if(data != null){
+                
+                // setDoor(data.door_access)
+                setParking(data.parking)
+                setStairs(data.stairs_alternative)
+                // setWay(data.way_to_place)
+                setToilets(data.toilets)
+                setWheelchair(data.wheelchair_access)
+                setAverageRating(data.averageRating)
+                setNumOfRatings(data.numOfRatings)
+               // console.log("successfuly retrieved " + place_id )
+                
+            }
+            else{
+                console.log("New place")
+            }
+        });
+    }
 
     const setStarRating = (inputStars, setRatingItem) => {    
         setRatingItem(inputStars)
         if(ratingIndex< ratings.length-1){
             setRatingIndex(ratingIndex+1)
         }
-        else{
+        else{ //last accessibility parameter to rate
             setRatingIndex(0)
             setShowingRatingAccessibility(false)
+            setPlaceData()
         }
     }
 

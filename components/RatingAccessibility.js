@@ -23,7 +23,7 @@ class RatingAccessibility extends Component {
   }
 
   onSkipPress(){
-    this.props.setStarRating(this.state.starCount, this.props.setRatingItem)
+    this.props.setStarRating(4, this.props.setRatingItem)
   }
 
   render() {
@@ -38,12 +38,6 @@ class RatingAccessibility extends Component {
               }
             fullStarColor={'#FFB84E'}
           />
-            {/* <Button 
-              onPress={() => this.onSubmitPress()}
-              color={"#2D9CDB"}
-              disabled={(this.state.starCount > 0) ? false : true}
-              title="Next">
-          </Button>  */}
           <View style={{flexDirection:"row", alignItems:"center"}}>
             <TouchableOpacity 
                 onPress={() =>this.onSubmitPress()} 
@@ -51,7 +45,7 @@ class RatingAccessibility extends Component {
                 disabled={(this.state.starCount > 0) ? false : true}>
 
               <Text style={styles.nextButton}>Next</Text>
-              
+
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() =>this.onSkipPress()} style={styles.button}>
