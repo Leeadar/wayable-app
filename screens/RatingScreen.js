@@ -88,31 +88,30 @@ const RatingScreen = ({ route, navigation })=>{
         navigation.navigate("Home")
     }
     return (
+        <View style={styles.screen}>
         <View style={styles.container}>
         {showingRatingAccessibility ? 
         <View>
+            <Text  style={styles.pageNumber}>{ratingIndex + 1}/{ratings.length}</Text>
             <Text style={styles.header}>{name}</Text>
 
             <Text  style={styles.title}>{currentRatingAccessibility.accessibilityTitle}</Text>
-            <RatingAccessibility key={ratingIndex} setStarRating={setStarRating} setRatingItem={currentRatingAccessibility.setRatingItem}/>
+            <View style={styles.starsWrapper}>
+             <RatingAccessibility key={ratingIndex} setStarRating={setStarRating} setRatingItem={currentRatingAccessibility.setRatingItem}/>
+            </View>
+            
 
         </View>
         :
         <View>
             {/* /Here set the data object on data base */}
-            <Text>Thank you!</Text>
-            <View>
-                <Text>{parkingStars}</Text>
-                <Text>{wheelchairStars}</Text>
-                <Text>{stairsStars}</Text>
-                <Text>{toiletStars}</Text> 
-            </View>
-            <Button  //Back to home
-                title="Back To Home"         
-                onPress={() => {sendUserToHomePage()}}
-            />  
+            <Text style={styles.header}>Thank you!</Text>
+            <TouchableOpacity onPress={() =>sendUserToHomePage()} style={styles.button}>
+              <Text style={styles.backToHomeButton}>Back To Home</Text>
+            </TouchableOpacity>
         </View>
         }
+        </View>
             {/* <Text style={styles.header}>{name}</Text>
 
             <Text  style={styles.title}>{currentRatingAccessibility.accessibilityTitle}</Text>
@@ -142,18 +141,48 @@ const RatingScreen = ({ route, navigation })=>{
 };
 
 const styles = StyleSheet.create({
+    screen:{
+        alignItems:'center',
+        backgroundColor:'#2F80ED',
+        flex: 1,
+    },
     container:{
-        marginTop:50,
-        alignItems:'center'
+        marginTop:150,
+        alignItems:'center',
+        backgroundColor:'white',
+        borderRadius:20,
+        minHeight:450,
+        minWidth:300
     },
     title:{
         fontSize:20,
-        marginBottom:5
+        marginBottom:20,
+        alignSelf:'center',
+        
     },
     header:{
         fontSize:30,
-        marginBottom:10
-    }
+        marginBottom:10,
+        fontWeight: 'bold',
+        alignSelf:'center',
+        marginTop:10
+    },
+    pageNumber:{
+        fontSize:20,
+        marginBottom:10,
+        alignSelf:'center',
+        marginTop:5
+    },
+    backToHomeButton: {
+        marginTop:100,
+        paddingTop:20,
+        paddingBottom:20,
+        color:'white',
+        textAlign:'center',
+        borderRadius: 25,
+        backgroundColor:'#2D9CDB',
+        fontSize:18
+      },
 });
 
 export default RatingScreen;

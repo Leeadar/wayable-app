@@ -22,6 +22,10 @@ class RatingAccessibility extends Component {
       this.props.setStarRating(this.state.starCount, this.props.setRatingItem)
   }
 
+  onSkipPress(){
+    this.props.setStarRating(this.state.starCount, this.props.setRatingItem)
+  }
+
   render() {
     return (
       <View>
@@ -34,14 +38,28 @@ class RatingAccessibility extends Component {
               }
             fullStarColor={'#FFB84E'}
           />
-          <View style={styles.button}>
-            <Button 
+            {/* <Button 
               onPress={() => this.onSubmitPress()}
               color={"#2D9CDB"}
               disabled={(this.state.starCount > 0) ? false : true}
               title="Next">
-          </Button> 
-          </View>      
+          </Button>  */}
+          <View style={{flexDirection:"row", alignItems:"center"}}>
+            <TouchableOpacity 
+                onPress={() =>this.onSubmitPress()} 
+                style={styles.button} 
+                disabled={(this.state.starCount > 0) ? false : true}>
+
+              <Text style={styles.nextButton}>Next</Text>
+              
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() =>this.onSkipPress()} style={styles.button}>
+              <Text style={styles.cancelButton}>Skip</Text>
+            </TouchableOpacity>  
+
+          </View>
+  
        
         </View> 
     );
@@ -50,8 +68,30 @@ class RatingAccessibility extends Component {
  
 const styles = StyleSheet.create({
   button: {
-
-  }})
+    marginTop:50,
+  },
+  nextButton: {
+    paddingTop:20,
+    paddingBottom:20,
+    color:'white',
+    textAlign:'center',
+    borderRadius: 25,
+    backgroundColor:'#2D9CDB',
+    width:150,
+    marginRight:10,
+    fontSize:18
+  },
+  cancelButton: {
+    paddingTop:20,
+    paddingBottom:20,
+    color:'#FBFBFB',
+    textAlign:'center',
+    borderRadius: 25,
+    backgroundColor:'#BDBDBD',
+    width:100,
+    fontSize:18
+  }
+})
 
 
 export default RatingAccessibility
