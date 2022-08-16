@@ -36,7 +36,7 @@ const RatingScreen = ({ route, navigation })=>{
     const ratings = [
         {
             accessibilityTitle:"How was the parking?",
-            setRatingItem:setParkingStars
+            setRatingItem: setParkingStars
         },
         {
             accessibilityTitle:"Was there wheelchair access?",
@@ -53,10 +53,7 @@ const RatingScreen = ({ route, navigation })=>{
     ]
     
     var currentRatingAccessibility = ratings[ratingIndex];
-
     const getAvgValue = (currentAvg, newValue)=> {
-        console.log({currentAvg})
-        console.log({toiletStars})
         return (currentAvg + newValue) / numOfRatings;
     }
 
@@ -69,7 +66,7 @@ const RatingScreen = ({ route, navigation })=>{
     const setPlaceData = () => {
 
         readData()
-        printData()
+        
         setNumOfRatings(numOfRatings + 1)
         
         setParking(getAvgValue(parking, parkingStars))
@@ -78,21 +75,15 @@ const RatingScreen = ({ route, navigation })=>{
         setWheelchair(getAvgValue(wheelchair_access, wheelchairStars))
         
 
-        update(ref(db, 'places/' + replacedPlaceName), {          
-            // door_access: 0,  
+        update(ref(db, 'places/' + replacedPlaceName), {           
             parking:parking,
             stairs_alternative:stairs_alternative,
-            way_to_place:0,
             toilets:toilets,
             wheelchair_access:wheelchair_access,
-            numOfRatings:0,
-            averageRating:0,
-            // numOfRatings:0,
-            // averageRating:0,
+            // numOfRatings:numOfRatings,
+            // averageRating:averageRating,
             
                     }).then(() => {
-                      console.log("set data of:")
-                      console.log(replacedPlaceName) 
                   })  
                       .catch((error) => {
                           // The write failed...
@@ -123,15 +114,16 @@ const RatingScreen = ({ route, navigation })=>{
         });
     }
 
-    const setStarRating = (inputStars, setRatingItem) => {    
+    const setStarRating = (inputStars, setRatingItem) => {  
         setRatingItem(inputStars)
+
         if(ratingIndex< ratings.length-1){
             setRatingIndex(ratingIndex+1)
         }
         else{ //last accessibility parameter to rate
-            setRatingIndex(0)
+            setRatingIndex(0)        
             setShowingRatingAccessibility(false)
-            setPlaceData()
+            //setPlaceData()
         }
     }
 
@@ -158,6 +150,10 @@ const RatingScreen = ({ route, navigation })=>{
         <View>
             {/* /Here set the data object on data base */}
             <Text style={styles.header}>Thank you!</Text>
+            <Text>Parking: {parkingStars}</Text>
+            <Text>WheelChair: {wheelchairStars}</Text>
+            <Text>stairs: {stairsStars}</Text>
+            <Text>toilet: {toiletStars}</Text>
             <TouchableOpacity onPress={() =>sendUserToHomePage()} style={styles.button}>
               <Text style={styles.backToHomeButton}>Back To Home</Text>
             </TouchableOpacity>

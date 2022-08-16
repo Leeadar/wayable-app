@@ -19,7 +19,7 @@ class RatingAccessibility extends Component {
   }
  
   onSubmitPress() {
-      this.props.setStarRating(this.state.starCount, this.props.setRatingItem)
+    this.props.setStarRating(this.state.starCount, this.props.setRatingItem)
   }
 
   onSkipPress(){
