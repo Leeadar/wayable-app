@@ -134,6 +134,9 @@ const MapScreen = ({navigation})=>{
                 
                 <Marker 
                     coordinate={{ latitude: pin.latitude, longitude: pin.longitude }}
+                    title={name}
+                    description="This is your location!"
+                    
                      />
 
                 {/* <Marker 

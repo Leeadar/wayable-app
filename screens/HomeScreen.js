@@ -109,7 +109,7 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Highly Rated Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                        inverted
+                        //inverted
                         data={highlyRatedData}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
@@ -123,7 +123,7 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Recommended Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                        inverted
+                       // inverted
                         data={recommendedPlaces}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    

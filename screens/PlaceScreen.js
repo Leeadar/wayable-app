@@ -56,7 +56,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
     }
 
 
-    //console.log(replaced) // will print the fixed place name
+    console.log(replaced) // will print the fixed place name
 
 
     // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
@@ -116,9 +116,11 @@ const  PlaceScreen =  ({ route, navigation })=>{
                         <Image style={styles.ratingImage} source={require('../assets/images/rate.png')}></Image>
                     </View>
 
-                    <View>
+                    <View  style={styles.ratePlaceButton} 
+>
                     <Button  // rate this place
-                        title="Rate This Place"         
+                        title="Rate This Place"
+                        
                         onPress={() => {navigation.navigate("Rating",{key:name, name:name})}}
                     />  
                     </View>
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
         right:-2,
         top:0,
         width:"auto",
-        fontSize:28,
+        fontSize:20,
         letterSpacing: -0.5,
         
         textAlign: "left",
@@ -350,6 +352,19 @@ const styles = StyleSheet.create({
         height:50,
         width:50,      
     },
+    ratePlaceButton:{
+        left:195,
+        position:"absolute",
+        height:80,
+        top:-30,
+        borderLeftWidth:2,
+        borderRadius:0,
+        borderBottomLeftRadius:20,
+        borderLeftColor:`#add8e6`,
+
+       // width:96,
+        //height:45,
+    }
     
     
 }

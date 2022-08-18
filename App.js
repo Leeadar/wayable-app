@@ -1,3 +1,4 @@
+import "./IgnoreWarnings"; // This is to ignore ViewPropTypes warnings
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,6 +9,7 @@ import MapScreen from './screens/MapScreen';
 import UserScreen from './screens/UserScreen';
 import PlaceScreen from './screens/PlaceScreen';
 import RatingScreen from './screens/RatingScreen';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 const Tab = createBottomTabNavigator();
 
