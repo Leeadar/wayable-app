@@ -68,7 +68,6 @@ const RatingScreen = ({ route, navigation })=>{
         readData()
         
         setNumOfRatings(numOfRatings + 1)
-        
         setParking(getAvgValue(parking, parkingStars))
         setStairs(getAvgValue(stairs_alternative, stairsStars))
         setToilets(getAvgValue(toilets, toiletStars))
