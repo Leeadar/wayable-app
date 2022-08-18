@@ -17,7 +17,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
     // replace ' ' with '_' in place's name (for example:"Azrieli Mall" => "Azrieli_Mall")
     const {name} = route.params;
     var str = name;
-    var replaced = str.split(' ').join('_');
+    var replacedPlaceName = str.split(' ').join('_');
     
     // Set all ratings state
     const [place,setPlace] = React.useState('')
@@ -56,12 +56,12 @@ const  PlaceScreen =  ({ route, navigation })=>{
     }
 
 
-    console.log(replaced) // will print the fixed place name
+    console.log(replacedPlaceName) // will print the fixed place name
 
 
     // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
     function readData(){
-        const placeRef = ref(db, 'places/' + replaced);
+        const placeRef = ref(db, 'places/' + replacedPlaceName);
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             if(data != null){
@@ -81,7 +81,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
             else{
                 console.log("Need to update")
                 
-                createData(replaced)
+                createData(replacedPlaceName)
             }
         });
     }
@@ -120,7 +120,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
 >
                     <Button  // rate this place
                         title="Rate This Place"
-                        
+                        style={styles.ButtonStyle}
                         onPress={() => {navigation.navigate("Rating",{key:name, name:name})}}
                     />  
                     </View>
@@ -364,6 +364,12 @@ const styles = StyleSheet.create({
 
        // width:96,
         //height:45,
+    },
+    ButtonStyle:{
+        textAlignVertical:"center",
+        textShadowColor:"black",
+        shadowRadius:50,
+        shadowOpacity:0,
     }
     
     
