@@ -2,14 +2,14 @@ const favoritsData = [
     {
         id: 1,
         image: require('../images/Habima-Squere.jpg'),
-        title: 'Habima Squere',
+        title: 'Habima Square',
         rate: '5',
         selected: true,
     },
     {
         id: 2,
         image: require('../images/Rabin-Squere.jpg'),
-        title: 'Rabin Squere',
+        title: 'Rabin Square',
         rate: '4.8',
         selected: true,
     },

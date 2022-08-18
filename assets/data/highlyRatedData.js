@@ -2,7 +2,7 @@ const highlyRatedData = [
     {
         id: 1,
         image: require('../images/Azrieli-Center.jpg'),
-        title: 'Azrieli Center',
+        title: 'Azrieli Mall',
         rate: '5',
         selected: true,
     },
@@ -16,14 +16,14 @@ const highlyRatedData = [
     {
         id: 3,
         image: require('../images/Rabin-Squere.jpg'),
-        title: 'Rabin Squere',
+        title: 'Rabin Square',
         rate: '4.5',
         selected: true,
     },
     {
         id: 4,
         image: require('../images/Habima-Squere.jpg'),
-        title: 'Habima Squere',
+        title: 'Habima Square',
         rate: '4',
         selected: true,
     },
