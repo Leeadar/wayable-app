@@ -106,7 +106,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
                 {/* Place Name */}
                 <View style={styles.placeNameWrapper}> 
-                    <Text style = {styles.placeNameStyle}>{place}</Text>
+                    <Text style = {styles.placeNameStyle}>{name}</Text>
                 </View>
 
                 {/* Average Rating */}
@@ -251,17 +251,21 @@ const styles = StyleSheet.create({
         left:0,
         right:-2,
         top:0,
-        width:"auto",
-        fontSize:20,
+        width:250,
+        fontSize:24,
         letterSpacing: -0.5,
-        
+        fontWeight:"500",
+        color:"#2e6990",
         textAlign: "left",
+        opacity:0.8,
+        textShadowColor:"black",
+        textShadowRadius:2,
     },
     RatingWrapper1:{
         position:"absolute",
         left:16,
         top:335,
-        width:96,
+        width:110,
         height:45,
     },
     DoorStar:{
@@ -278,14 +282,14 @@ const styles = StyleSheet.create({
         position:"absolute",
         left:0,
         top:4,
-        width:50,
+        width:60,
         fontSize:32,
         letterSpacing:-0.5,
         textAlign:"left",
     },
     ratingImage:{
         position:"absolute",
-        left:50,
+        left:60,
         top:0,
         borderRadius:null,
         width:45,

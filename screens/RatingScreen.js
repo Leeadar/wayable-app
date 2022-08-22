@@ -44,6 +44,9 @@ const RatingScreen = ({ route, navigation }) => {
     const [new_numOfRatings, setNewNumOfRatings] = React.useState(0);
     const [new_averageRating, setNewAverageRating] = React.useState(0);
     const [checkUpdate, setCheckUpdate] = React.useState(0);
+    const [submitBackgroundColor, setSubmitBackgroundColor] = React.useState('white');
+    const [backButton, setBackButton] = React.useState(true);
+    const [submitButton, setSubmitButton] = React.useState(false);
     const [ratingIndex, setRatingIndex] = React.useState(0);
     const [showingRatingAccessibility, setShowingRatingAccessibility] = React.useState(true);
     const [submited, setSubmited] = React.useState(false)
@@ -80,6 +83,9 @@ const RatingScreen = ({ route, navigation }) => {
     var currentRatingAccessibility = ratings[ratingIndex];
     const getAvgValue = (currentAvg, newValue) => {
         // If num of ratings = 0 
+        if(currentAvg == 0 && numOfRatings == 0){
+            return newValue
+        }
         let avg = ((currentAvg * (numOfRatings - 1)) + newValue) / numOfRatings;
         avg = (Math.round(avg * 100) / 100)
         return avg;
@@ -179,11 +185,7 @@ const RatingScreen = ({ route, navigation }) => {
         }
     }
 
-    const handleRatings = async () => {
-        await readData()
-        setPlaceData()
-        printData()
-    }
+
 
     const sendUserToHomePage = () => {
         setShowingRatingAccessibility(true)
@@ -202,10 +204,10 @@ const RatingScreen = ({ route, navigation }) => {
 
     //React.useEffect(()=>{ },[parking])
 
-    React.useEffect(() => {readData()},[])
+    React.useEffect(() => {readData()},[name])
 
     
-
+    
     return (
         <View style={styles.screen}>
             <View style={styles.container}>
@@ -234,23 +236,43 @@ const RatingScreen = ({ route, navigation }) => {
                         <TouchableOpacity 
                         onPress={() => {
                             console.log("Starting Values:\n")
-                            printData()
-                            setPlaceData()
+                            printData()           // Print data BEFORE changes
+                            setPlaceData()        // Set all new averages
+                            setSubmitButton(true) // Make BACK button pressable
+                            setBackButton(false) // Make Confirm button unpressable
+                            alert("Confirmed review!")
                             
                         }} 
-                        style={styles.button}>
-                            <Text style={styles.backToHomeButton}>Confirm</Text>
+                        disabled={submitButton}
+                        >
+                            <Text style={{    marginTop: 100,
+                                    paddingTop: 20,
+                                    paddingBottom: 20,
+                                    color:'white',
+                                    textAlign: 'center',
+                                    borderRadius: 25,
+                                    backgroundColor: '#2D9CDB',
+                                    fontSize: 18}}
+                            >
+                            Confirm
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {
-                            console.log("Average Values:\n")
-                            
-                            printData()
-                            updateData()
-                            setRatingIndex(0)
-                            navigation.goBack()
+                        <TouchableOpacity 
+                            onPress={() => {
+                                console.log("Average Values:\n")
                                 
-                        }} 
-                        style={styles.button}>
+                                printData() // Print data AFTER changes
+                                updateData() // Update new data to DB
+                                setRatingIndex(0) // Reset rating's list index
+                                setShowingRatingAccessibility(true) 
+                                setSubmitButton(false) // Make CONFIRM button pressable
+                                setBackButton(true) // Make BACK button unpressable
+                                alert("Successfuly sent review!")
+
+                                navigation.goBack()                                         
+                            }} 
+                            disabled={backButton}
+                            style={styles.button}>
                             <Text style={styles.backToHomeButton}>Submit and Back to home</Text>
                         </TouchableOpacity>
                     </View>
@@ -327,6 +349,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#2D9CDB',
         fontSize: 18
     },
+
 });
 
 export default RatingScreen;
