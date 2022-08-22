@@ -81,6 +81,7 @@ const RatingScreen = ({ route, navigation }) => {
     const getAvgValue = (currentAvg, newValue) => {
         // If num of ratings = 0 
         let avg = ((currentAvg * (numOfRatings - 1)) + newValue) / numOfRatings;
+        avg = (Math.round(avg * 100) / 100)
         return avg;
 
     }
@@ -102,12 +103,12 @@ const RatingScreen = ({ route, navigation }) => {
 
         
             setNumOfRatings(numOfRatings + 1)
-            setWay((currentState)=>{return getAvgValue(currentState,wayStars)})
+            setWay(getAvgValue(way_to_place,wayStars))
             setParking(getAvgValue(parking, parkingStars))
             setStairs(getAvgValue(stairs_alternative, stairsStars))
             setToilets(getAvgValue(toilets, toiletStars))
             setWheelchair(getAvgValue(wheelchair_access, wheelchairStars))
-            setWay((currentState)=>{return getAvgValue(currentState,wayStars)})
+            //setWay((currentState)=>{return getAvgValue(currentState,wayStars)})
             setDoor(getAvgValue(door_access,doorStars))
             setNewParking(1)
             console.log("Set place data")
