@@ -8,10 +8,13 @@ import highlyRatedData from '../assets/data/highlyRatedData';
 import { db } from '../Core/Config';
 import { getDatabase, ref, set, onValue, update,push,child } from "firebase/database";
 import RatingAccessibility from '../components/RatingAccessibility';
+import RNRestart from "react-native-restart";
+
 
 const RatingScreen = ({ route, navigation }) => {
     const { name } = route.params;
     var str = name;
+    var replacedPlaceName = str.split(' ').join('_');
     
     const [parkingStars, setParkingStars] = React.useState(0);
     const [wheelchairStars, setWheelchairStars] = React.useState(0);
@@ -78,53 +81,47 @@ const RatingScreen = ({ route, navigation }) => {
     const getAvgValue = (currentAvg, newValue) => {
         // If num of ratings = 0 
         let avg = ((currentAvg * (numOfRatings - 1)) + newValue) / numOfRatings;
-        console.log("average:", avg)
         return avg;
 
     }
 
+    const onButtonClick = () => {
+        RNRestart.Restart();
+        };
 
     const printData = () => {
-        console.log({ wheelchair_access }, { stairs_alternative }, { toilets }, { parking })
+       
+        console.log(wheelchair_access,stairs_alternative,toilets,parking,numOfRatings)
     }
 
 
-    const setPlaceData = () => {
+    function setPlaceData(){
 
-        readData()
+       // readData()
+        //while(new_door_access){console.log("waited")}
 
-        setNumOfRatings(numOfRatings + 1).then(() => {
+        
+            setNumOfRatings(numOfRatings + 1)
+            setWay((currentState)=>{return getAvgValue(currentState,wayStars)})
             setParking(getAvgValue(parking, parkingStars))
             setStairs(getAvgValue(stairs_alternative, stairsStars))
             setToilets(getAvgValue(toilets, toiletStars))
             setWheelchair(getAvgValue(wheelchair_access, wheelchairStars))
-        })
-
-
-        update(ref(db, 'places/' + replacedPlaceName), {
-            parking: parking,
-            stairs_alternative: stairs_alternative,
-            toilets: toilets,
-            wheelchair_access: wheelchair_access,
-            numOfRatings: numOfRatings
-            // averageRating:averageRating,
-
-        }).then(() => {
-        })
-            .catch((error) => {
-                // The write failed...
-                alert(error);
-            });
+            setWay((currentState)=>{return getAvgValue(currentState,wayStars)})
+            setDoor(getAvgValue(door_access,doorStars))
+            setNewParking(1)
+            console.log("Set place data")
+        
     }
 
 
 
     function updateData() {
-        console.log(parking,way_to_place,door_access,wheelchair_access,toilets)
-      
-       
-      
+        //console.log(parking,way_to_place,door_access,wheelchair_access,toilets)
+         
         console.log( set(ref(db,'/places/' + replacedPlaceName), {
+            place_id:replacedPlaceName,
+            averageRating:averageRating,
             parking: parking,
             stairs_alternative: stairs_alternative,
             toilets: toilets,
@@ -135,12 +132,13 @@ const RatingScreen = ({ route, navigation }) => {
         }))
 
 
+
     }
 
 
 
-    function readData() {
-        const placeRef = ref(db, 'places/' + replacedPlaceName);
+    async function readData() {
+        const placeRef = await ref(db, 'places/' + replacedPlaceName);
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             if (data != null) {
@@ -154,11 +152,12 @@ const RatingScreen = ({ route, navigation }) => {
                 setWheelchair(data.wheelchair_access)
                 setAverageRating(data.averageRating)
                 setNumOfRatings(data.numOfRatings)
-                console.log("first")
+                setNewDoor(1)
+               // console.log("first")
 
             }
             else {
-                console.log("Need to update")
+              //  console.log("Need to update")
 
                 // createData(replaced)
             }
@@ -179,32 +178,32 @@ const RatingScreen = ({ route, navigation }) => {
         }
     }
 
+    const handleRatings = async () => {
+        await readData()
+        setPlaceData()
+        printData()
+    }
+
     const sendUserToHomePage = () => {
         setShowingRatingAccessibility(true)
-        //readData();
+        readData()
+        setPlaceData()
+        updateData()
+        printData()
         //setSubmited("Read Data")
         // updateValues();
 
         //setSubmited("updated values")
         // updateData();
-        // navigation.navigate("Home")
+        navigation.navigate("Home")
     }
 
 
     //React.useEffect(()=>{ },[parking])
 
-    React.useEffect(() => {
-        console.log('Do something after counter has changed', numOfRatings);
-        if (numOfRatings !== 0) {
-            parking = (getAvgValue(parking, parkingStars))
-            setStairs(getAvgValue(stairs_alternative, stairsStars))
-            setToilets(getAvgValue(toilets, toiletStars))
-            setWheelchair(getAvgValue(wheelchair_access, wheelchairStars))
-            setWay(getAvgValue(way_to_place, wayStars))
-            setDoor(getAvgValue(door_access, doorStars))
-            updateData()
-        }
-    }, [numOfRatings],[way_to_place],[door_access],[wheelchair_access],[toilets],[stairsStars]);
+    React.useEffect(() => {readData()},[])
+
+    
 
     return (
         <View style={styles.screen}>
@@ -231,13 +230,27 @@ const RatingScreen = ({ route, navigation }) => {
                         <Text>Door Accessibility: {doorStars}</Text>
                         <Text>Stairs Alternative: {stairsStars}</Text>
                         <Text>Toilets: {toiletStars}</Text>
+                        <TouchableOpacity 
+                        onPress={() => {
+                            console.log("Starting Values:\n")
+                            printData()
+                            setPlaceData()
+                            
+                        }} 
+                        style={styles.button}>
+                            <Text style={styles.backToHomeButton}>Confirm</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
-                            readData()
-                            setNumOfRatings(numOfRatings + 1)
-                            sendUserToHomePage()
+                            console.log("Average Values:\n")
+                            
+                            printData()
+                            updateData()
+                            setRatingIndex(0)
+                            navigation.goBack()
                                 
-                        }} style={styles.button}>
-                            <Text style={styles.backToHomeButton}>Submit and Back To Home</Text>
+                        }} 
+                        style={styles.button}>
+                            <Text style={styles.backToHomeButton}>Submit and Back to home</Text>
                         </TouchableOpacity>
                     </View>
                 }

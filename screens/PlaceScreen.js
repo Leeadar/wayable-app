@@ -86,7 +86,9 @@ const  PlaceScreen =  ({ route, navigation })=>{
         });
     }
    // console.log(averageRating)
-  React.useEffect(()=>{ readData()})
+  React.useEffect(()=>{ readData()
+    
+})
     
     return (
 
