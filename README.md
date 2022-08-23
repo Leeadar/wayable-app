@@ -18,6 +18,11 @@ Also, the app will allow the user to rate places based on the same criteria so t
 
 The accessibility indices that will appear in the application are in line with the principles of accessibility law, and in particular with the standards published by the Equal Opportunities Commission. The user interface will be accessible and simple so that all people with disabilities will use it comfortably.
 
+## Tools Used for Development :wrench:
+- React Native
+- JavaScript
+- Firebase
+
 ## Team Members :man_office_worker::man_office_worker::man_office_worker:
 - Leead Arbetman
 - Tomer Ahimeir
