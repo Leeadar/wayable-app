@@ -33,7 +33,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [averageRating, setAverageRating] = React.useState('');
     const [reviews,setReviews] = React.useState([]);
     
-
+    //
     
 
     // Suppose to add a new place to DB with , default values will be -1 , So the first rating will not calculate average with -1 value.
