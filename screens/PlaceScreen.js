@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image,ScrollView, FlatList,TextInput,Button,TouchableOpacity } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image,ScrollView, FlatList,TextInput,Button,TouchableOpacity,ImageBackground } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -31,7 +31,12 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [parking, setParking] = React.useState('');
     const [numOfRatings, setNumOfRatings] = React.useState('');
     const [averageRating, setAverageRating] = React.useState('');
-    const [reviews,setReviews] = React.useState([]);
+    const [review1,setReview1] = React.useState(["Poor accessibility"]);
+    const [review2,setReview2] = React.useState(["Easy to arrive!"]);
+    const [review3,setReview3] = React.useState(["Will be back soon!"]);
+    const [review4,setReview4] = React.useState(["Great Accessibility!"]);
+    const [review5,setReview5] = React.useState(["Toilets were clean af"]);
+    const [boli,setBoli] = React.useState(true)
     
     //
     
@@ -48,6 +53,8 @@ const  PlaceScreen =  ({ route, navigation })=>{
             wheelchair_access:0,
             numOfRatings:0,
             averageRating:0,
+            reviews:["check","if entered"],
+            
             
                     }).then(() => {
                       console.log("added data of:")
@@ -70,8 +77,20 @@ const  PlaceScreen =  ({ route, navigation })=>{
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             if(data != null){
-                //console.log(data)
-                setReviews(data.reviews)
+                console.log(data)
+                try{
+                setReview1((data.reviews)[1])
+                setReview2((data.reviews)[2])
+                setReview3((data.reviews)[3])
+                setReview4((data.reviews)[4])
+                setReview5((data.reviews)[5])
+
+                }
+                catch{
+                    console.log("ok")
+                }
+                console.log("red")
+
                 setPlace(data.place_id)
                 setDoor(data.door_access)
                 setParking(data.parking)
@@ -91,11 +110,25 @@ const  PlaceScreen =  ({ route, navigation })=>{
             }
         });
     }
+
+    function renderReview(){
+        console.log(reviews)
+        // ((item)=>{
+        //     if(boli){
+            return (
+                <View style={styles.textReviewlil} key={item} >
+                    <Text style={styles.textReview}>{reviews[1]}</Text>
+                </View>
+            )
+        //     )
+        //     }
+
+    }
+    function getAvg(){
+        return ((door_access+parking+stairs_alternative+way_to_place+toilets+wheelchair_access)/6)
+    }
    // console.log(averageRating)
-  React.useEffect(()=>{ readData() 
-    
-    
-})
+  React.useEffect(()=>{ readData(); })
     
     return (
         
@@ -103,12 +136,14 @@ const  PlaceScreen =  ({ route, navigation })=>{
                {/* Header */}
                <SafeAreaView>
                     <View style={styles.headWrapper}>
-                        <Image source={require('../assets/images/Wayable.png')} 
+                        <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
+                        <Image source={require('../assets/images/Wayable3.png')}
                         style={styles.headImage}
-                         />                                             
-                    </View>                  
+                         />
+                         </ImageBackground>
+                         
+                    </View>
                 </SafeAreaView>
-
             
                 {/* TODO : REQUIRE IMAGE FROM GOOGLE API */}
                 <View style={styles.placeImageWrapper}>
@@ -201,16 +236,37 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
                             </View> 
 
-                            <View  style={styles.textReviewsWrapper}>
-                                {reviews.map((item)=>{
-                                    return (
-                                        <View style={styles.textReviewlil} key={item}>
-                                            <Text style={styles.textReview}>"{item}"</Text>
-                                        </View>
-                                    )
-                                })}
-                            </View>    
+                            <View style={{backgroundColor:'white',}}>
+                                <Text style={styles.reviewsText}>Reviews:</Text>
+                            </View>
 
+                            <View  style={styles.textReviewsWrapper}>
+                                                              
+                                     
+                                            <View style={styles.textReviewlil} >
+                                                <View style={styles.reviewWrap}>
+                                                <Text style={styles.textReview}>"{review1}"</Text>                             
+                                                </View>
+                                            </View>
+                                            <View style={styles.textReviewlil} >
+                                                <View style={styles.reviewWrap}>
+                                                <Text style={styles.textReview}>"{review2}"</Text>                             
+                                                </View>
+                                            </View>
+                                            <View style={styles.textReviewlil} >
+                                                <View style={styles.reviewWrap}>
+                                                <Text style={styles.textReview}>"{review3}"</Text>                             
+                                                </View>
+                                            </View>
+                                            <View style={styles.textReviewlil} >
+                                                <View style={styles.reviewWrap}>
+                                                <Text style={styles.textReview}>"{review4}"</Text>                             
+                                                </View>
+                                            </View>
+                                       
+                       
+                            </View>     
+                       
                     </ScrollView>                            
                 </View>
 
@@ -227,14 +283,42 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
 
 const styles = StyleSheet.create({
-   
+    reviewsText:{
+        marginRight:2,
+        fontSize:24,
+        letterSpacing: -0.5,
+        fontWeight:"500",
+        color:"#2e6990",
+        textAlign: "center",
+        opacity:1,
+        textShadowColor:"black",
+        textShadowRadius:1,
+        paddingBottom:10,
+        marginTop:100,
+    },
+    reviewWrap:{
+        width:'70%',
+        backgroundColor:'white',
+        height:60,
+        alignContent:'center',
+        marginLeft:50,
+        marginTop:10,
+        marginBottom:10,
+        borderColor:'grey',
+        borderWidth:1,
+
+    },
     reviewsWrapper:{
         width:'100%',
-        height:200,
+        height:100,
         backgroundColor:'white',
         flexDirection:'column',
         flexWrap:'wrap',
        
+    },
+    titleBackground:{
+        opacity:1,
+        width:'100%',
     },
     textReviewlil:{
         
@@ -363,7 +447,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
     },
     placeImageWrapper:{
-        paddingTop:10,
+        paddingTop:0,
         width:'100%',
         backgroundColor:'white',
         borderBottomColor:"#2e6990",
@@ -377,7 +461,7 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         backgroundColor:'white',
         width:'100%',
-        height:'12%',
+        height:'15%',
         top:0,
 
     },
@@ -397,13 +481,21 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingBottom:10,
         borderBottomColor:"#2e6990",
+        
     },
     headImage:{
         width: 223,
         height: 38,
-        marginTop:28,
-        marginLeft:76,
-        marginRight:76,    
+        marginTop:40,
+        marginLeft:85,
+        marginRight:76,   
+        opacity:1, 
+        
+    },
+    backgroundTitle:{
+        height:100,
+        width:'100%',
+        marginLeft:10,
     },
     imageStyle:{
        // position:"absolute",

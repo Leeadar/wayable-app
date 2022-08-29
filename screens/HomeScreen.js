@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, TouchableOpacity,Button, ScrollView, StatusBar  } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image, FlatList,ImageBackground, TouchableOpacity,Button, ScrollView, StatusBar  } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -43,9 +43,11 @@ const HomeScreen = ({navigation})=>{
                 {/* Header */}
                 <SafeAreaView>
                     <View style={styles.headWrapper}>
-                        <Image source={require('../assets/images/Wayable.png')}
+                        <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
+                        <Image source={require('../assets/images/Wayable3.png')}
                         style={styles.headImage}
                          />
+                         </ImageBackground>
                          
                     </View>
                 </SafeAreaView>
@@ -143,6 +145,18 @@ const HomeScreen = ({navigation})=>{
 
 
 const styles = StyleSheet.create({
+    backgroundTitle:{
+        width:'100%',
+        marginLeft:8,
+        height:170,
+        borderStartColor:'white',
+        borderStartWidth:0,
+        borderTopStartRadius:10,
+        borderRadius:30,
+        borderColor:'white',
+        borderWidth:0
+        
+    },
     container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
@@ -154,13 +168,15 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         paddingLeft: 0,
         alignItems:'center',
+        height:'10%',
     },
     headImage:{
         width: 223,
         height: 38,
         marginTop:28,
-        marginLeft:76,
-        marginRight:76,    
+        marginLeft:85,
+        marginRight:76,  
+          
     },
     searchWrapper:{
         hight: 100,

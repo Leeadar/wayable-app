@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, Dimensions,TouchableOpacity,Button } from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image, FlatList, Dimensions,TouchableOpacity,Button, ImageBackground } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -47,14 +47,18 @@ const MapScreen = ({navigation})=>{
         <View > 
                      {/* Header Image */}
 
+                     <SafeAreaView>
                     <View style={styles.headWrapper}>
-                        <Image source={require('../assets/images/Wayable.png')}
-                        style={styles.headImage} />  
-                        
-                    
+                        <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
+                        <Image source={require('../assets/images/Wayable3.png')}
+                        style={styles.headImage}
+                         />
+                         </ImageBackground>
+                         
                     </View>
+                </SafeAreaView>
              
-       <View style={{marginTop:30,flex: 1,marginBottom:45}}>
+       <View style={{marginTop:0,flex: 1,marginBottom:45}}>
                                                                             
                      {/* Google Search Bar */}
             <GooglePlacesAutocomplete
@@ -178,6 +182,18 @@ const styles = StyleSheet.create({
       width: Dimensions.get('window').width ,
       height: Dimensions.get('window').height - 250
     },
+    backgroundTitle:{
+        width:'100%',
+        marginLeft:8,
+        height:100,
+        borderStartColor:'white',
+        borderStartWidth:0,
+        borderTopStartRadius:10,
+        borderRadius:30,
+        borderColor:'white',
+        borderWidth:0
+        
+    },
     headWrapper:{
         justifyContent:'space-between',
         paddingHorizontal: 10,
@@ -189,7 +205,7 @@ const styles = StyleSheet.create({
         width: 223,
         height: 38,
         marginTop:28,
-        marginLeft:76,
+        marginLeft:84,
         marginRight:76,    
     },
     homeBottomWrapper:{

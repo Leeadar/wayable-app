@@ -128,7 +128,7 @@ const RatingScreen = ({ route, navigation }) => {
          
         console.log( set(ref(db,'/places/' + replacedPlaceName), {
             place_id:replacedPlaceName,
-            averageRating:averageRating,
+            averageRating:getAvgRating(),
             parking: parking,
             stairs_alternative: stairs_alternative,
             toilets: toilets,
@@ -136,6 +136,7 @@ const RatingScreen = ({ route, navigation }) => {
             numOfRatings: numOfRatings,
             way_to_place:way_to_place,
             door_access:door_access,
+            reviews:reviews
         }))
 
 
@@ -184,7 +185,10 @@ const RatingScreen = ({ route, navigation }) => {
             //setPlaceData()
         }
     }
-
+    function getAvgRating(){
+        
+        return (Math.round(((door_access+parking+stairs_alternative+way_to_place+toilets+wheelchair_access)/6) * 100) / 100)
+    }
 
 
     const sendUserToHomePage = () => {
@@ -267,6 +271,8 @@ const RatingScreen = ({ route, navigation }) => {
                                 setShowingRatingAccessibility(true) 
                                 setSubmitButton(false) // Make CONFIRM button pressable
                                 setBackButton(true) // Make BACK button unpressable
+                                
+                                
                                 alert("Successfuly sent review!")
 
                                 navigation.goBack()                                         
