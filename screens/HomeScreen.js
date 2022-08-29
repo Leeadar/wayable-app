@@ -10,38 +10,32 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { YellowBox } from 'react-native-web';
 import recommendedPlaces from '../assets/data/RecommendedPlaces';
 
-
-// check git
-//navigator.geolocation = require(GEOLOCATION_PACKAGE) // Essential for Current Location feature
-
 const HomeScreen = ({navigation})=>{
-    
-    const renderFavoriteItem = ({item}) => {
-       return (
-        <View style={styles.favoritesItemWrapper}>
-            <TouchableOpacity 
-                    onPress={()=>{
-                    console.log(item.title)
-                    navigation.navigate("Place",{name:item.title})}}
-            >
-            <Image source={item.image} style={styles.favoritesItemImage} />
-             <Text style={styles.favoritesItemText}>{item.title}</Text>
-                <Text>
-                     <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <Text style={styles.favoritesItemStarText}>{item.rate}</Text> 
-                        <Image source={require('../assets/images/rate.png')} style={styles.favoritesStar} />
-                    </View>
-                </Text>
-            </TouchableOpacity>
 
-        </View>       
-       );
-    }
+    const renderFavoriteItem = ({item}) => {
+        return (
+         <View style={styles.favoritesItemWrapper}>
+             <TouchableOpacity 
+                     onPress={()=>{
+                     navigation.navigate("Place",{name:item.title})}}
+             >
+             <Image source={item.image} style={styles.favoritesItemImage} />
+              <Text style={styles.favoritesItemText}>{item.title}</Text>
+                 <Text>
+                      <View style={{flexDirection:'row', alignItems:'center'}}>
+                         <Text style={styles.favoritesItemStarText}>{item.rate}</Text> 
+                         <Image source={require('../assets/images/rate.png')} style={styles.favoritesStar} />
+                     </View>
+                 </Text>
+             </TouchableOpacity>
+ 
+         </View>       
+        );
+     }
 
     return (
-            <View style={styles.container}>
-                {/* Header */}
-                <SafeAreaView>
+        <View style={styles.container}>
+             <SafeAreaView>
                     <View style={styles.headWrapper}>
                         <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
                         <Image source={require('../assets/images/Wayable3.png')}
@@ -51,26 +45,20 @@ const HomeScreen = ({navigation})=>{
                          
                     </View>
                 </SafeAreaView>
-
+                <SafeAreaView>
                 {/* Search Bar */}
                 <View style={styles.searchWrapper}>
                     {/* <Feather name="search" size={25} color={colors} /> */}
-                    <View style={styles.search}>
+                    <View>
                         <GooglePlacesAutocomplete
 				            placeholder="Search"
 				            fetchDetails={true}
+                            enablePoweredByContainer={false}
 				            GooglePlacesSearchQuery={{
 					        rankby: "distance"
 				                }}
 				            onPress={(data, details = null) => {
-					// 'details' is provided when fetchDetails = true
-				        	console.log(data, details)
-					        setRegion({
-					        	latitude: details.geometry.location.lat,
-						        longitude: details.geometry.location.lng,
-						        latitudeDelta: 0.0922,
-						        longitudeDelta: 0.0421
-				                	})
+                                navigation.navigate("Place",{name:details["name"]})
 				            }}
 				            query={{
 				        	key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM",
@@ -78,19 +66,16 @@ const HomeScreen = ({navigation})=>{
 					        components: "country:il",
 					        types: "establishment",
 					        radius: 30000,
-					
 			            	}}
 				            styles={{
-				            	container: { flex: 0, position: "absolute", width: "100%", zIndex: 1},
-				            	listView: { backgroundColor: "black" },
+				            	container: { flex: 0, zIndex: 1, position: "absolute", width: "100%"},
                                 textInput: {height:50,backgroundColor:"#F6F6F6", fontSize: 16, borderRadius:30},
                                     }}
 		            	/>
                     </View>
                 </View>
-                
-                {/* Favorites */}
-                <SafeAreaView style={styles.container}>
+                </SafeAreaView>
+                <SafeAreaView style={styles.favoritesContainer }>
                 <ScrollView style={styles.scrollView}>
                 <View style={styles.favoritsWrapper}>   
                     <Text style={styles.favoritsTitle}> Favorites </Text>
@@ -101,17 +86,13 @@ const HomeScreen = ({navigation})=>{
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-
                         />         
                     </View>
-                </View>
-                     {/* {TO BE FIXED - CURRENTLY USING FAVORITES COMPONENTS}    */}
-                    {/* Highly Rated Places    */}    
-                <View style={styles.favoritsWrapper}>   
+                </View>   
+                <View style={styles.favoritsWrapper} >   
                     <Text style={styles.favoritsTitle}> Highly Rated Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                        //inverted
                         data={highlyRatedData}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
@@ -125,24 +106,22 @@ const HomeScreen = ({navigation})=>{
                     <Text style={styles.favoritsTitle}> Recommended Places </Text>
                     <View style={styles.favoritsList}>
                     <FlatList
-                       // inverted
                         data={recommendedPlaces}
                         renderItem={renderFavoriteItem}
                         keyExtractor={(item) => item.id}                    
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-
                         />         
                     </View>
                 </View>
 
                 </ScrollView>
                 </SafeAreaView>
-            </View>
-    );
+        </View>
+
+
+    )
 };
-
-
 
 const styles = StyleSheet.create({
     backgroundTitle:{
@@ -159,13 +138,12 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: StatusBar.currentHeight,
         backgroundColor:"#FFFFFF"
       },
     headWrapper:{
+        paddingTop: StatusBar.currentHeight,
         justifyContent:'space-between',
         paddingHorizontal: 10,
-        paddingTop: 0,
         paddingLeft: 0,
         alignItems:'center',
         height:'10%',
@@ -179,32 +157,19 @@ const styles = StyleSheet.create({
           
     },
     searchWrapper:{
+        flex:1,
         hight: 100,
         flexDirection:'row',
         alignItems:'center',
         paddingHorizontal:20,
         marginTop:30,
         marginBottom:50,
-        backgroundColor:"yellow"
             
     },
-    search:{
+    favoritesContainer:{
         flex:1,
-        marginRight:10,
-        borderBottomColor: colors.textLight,
-        borderColor:colors.black
-       // borderBottomWidth: 2,        
+        paddingTop:15,
     },
-    searchText:{
-        marginLeft:5,
-        fontSize:20,
-        marginBottom:3,
-        color: colors.textLight,
-    },
-    scrollView: {
-        // backgroundColor: 'pink',
-        marginBottom:2
-      },
     favoritsWrapper:{
         marginTop:8,
     },
@@ -212,6 +177,7 @@ const styles = StyleSheet.create({
         fontSize:24,
         paddingHorizontal:5,
     },
+    
     favoritesItemWrapper:{
         marginRight:10,
         justifyContent:'center'
@@ -243,6 +209,8 @@ const styles = StyleSheet.create({
     },
         
     
+
 });
+
 
 export default HomeScreen;
