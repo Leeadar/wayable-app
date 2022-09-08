@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Image, FlatList, TouchableOpacity, Button, ScrollView, StatusBar } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Image, FlatList, TextInput, TouchableOpacity, Button, ScrollView, StatusBar, Alert  } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import ImageDetail from '../components/imageDetail';
@@ -50,6 +50,10 @@ const RatingScreen = ({ route, navigation }) => {
     const [ratingIndex, setRatingIndex] = React.useState(0);
     const [showingRatingAccessibility, setShowingRatingAccessibility] = React.useState(true);
     const [submited, setSubmited] = React.useState(false)
+    const [confirmed, setConfirmed] = React.useState("Click to confirm!")
+    const [review_text, onChangeText] = React.useState("Enter review here");
+    const [number, onChangeNumber] = React.useState(null);
+    const [reviews, setReviews] = React.useState('');
 
     const ratings = [
         {
@@ -117,10 +121,23 @@ const RatingScreen = ({ route, navigation }) => {
             //setWay((currentState)=>{return getAvgValue(currentState,wayStars)})
             setDoor(getAvgValue(door_access,doorStars))
             setNewParking(1)
-            console.log("Set place data")
-        
+           // console.log("Set place data")
+            handleReview()
     }
 
+    function handleReview(){
+        if(review_text == 'Enter review here' || review_text== ""){
+            return
+        }
+        const postListRef = ref(db, '/places/' + replacedPlaceName + '/reviews');       
+        const newPostRef = push(postListRef);    
+        set(newPostRef, {
+            review_text
+        });
+
+        onChangeText('Enter review here')
+
+    }
 
 
     function updateData() {
@@ -137,9 +154,11 @@ const RatingScreen = ({ route, navigation }) => {
             way_to_place:way_to_place,
             door_access:door_access,
             reviews:reviews
+            //reviews:reviews
         }))
 
-
+        
+        console.log(reviews)
 
     }
 
@@ -161,6 +180,7 @@ const RatingScreen = ({ route, navigation }) => {
                 setAverageRating(data.averageRating)
                 setNumOfRatings(data.numOfRatings)
                 setNewDoor(1)
+                setReviews(data.reviews)
                // console.log("first")
 
             }
@@ -208,7 +228,7 @@ const RatingScreen = ({ route, navigation }) => {
 
     //React.useEffect(()=>{ },[parking])
 
-    React.useEffect(() => {readData()},[name])
+    React.useEffect(() => {readData();},[name])
 
     
     
@@ -229,6 +249,7 @@ const RatingScreen = ({ route, navigation }) => {
                     </View>
                     :
                     <View>
+                        <View style={styles.ratingsWrapper}>
                         {/* /Here set the data object on data base */}
                         <Text style={styles.header}>Thank you!</Text>
                         <Text>Parking: {parkingStars}</Text>
@@ -237,14 +258,29 @@ const RatingScreen = ({ route, navigation }) => {
                         <Text>Door Accessibility: {doorStars}</Text>
                         <Text>Stairs Alternative: {stairsStars}</Text>
                         <Text>Toilets: {toiletStars}</Text>
+                        </View>
+                        
+                        <TextInput
+                            style={styles.input}
+                            
+                            onChangeText={newText => onChangeText(newText)}
+                            value={number}
+                            placeholder="Enter review here"
+                            //keyboardType="numeric"
+                            disabled={backButton}
+                            
+                        />
+                        
                         <TouchableOpacity 
                         onPress={() => {
-                            console.log("Starting Values:\n")
+                            //console.log("Starting Values:\n")
                             printData()           // Print data BEFORE changes
                             setPlaceData()        // Set all new averages
                             setSubmitButton(true) // Make BACK button pressable
                             setBackButton(false) // Make Confirm button unpressable
-                            alert("Confirmed review!")
+                           // alert("Confirmed review!")
+                            setConfirmed("Confirmed!")
+                            
                             
                         }} 
                         disabled={submitButton}
@@ -258,22 +294,22 @@ const RatingScreen = ({ route, navigation }) => {
                                     backgroundColor: '#2D9CDB',
                                     fontSize: 18}}
                             >
-                            Confirm
+                            {confirmed}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
                             onPress={() => {
-                                console.log("Average Values:\n")
+                             //   console.log("Average Values:\n")
                                 
-                                printData() // Print data AFTER changes
+                                //printData() // Print data AFTER changes
                                 updateData() // Update new data to DB
                                 setRatingIndex(0) // Reset rating's list index
                                 setShowingRatingAccessibility(true) 
                                 setSubmitButton(false) // Make CONFIRM button pressable
                                 setBackButton(true) // Make BACK button unpressable
-                                
-                                
-                                alert("Successfuly sent review!")
+                                setConfirmed("Click to confirm!")
+                                console.log(review_text)
+                                Alert.alert( "Thank you!","Successfuly sent review!")
 
                                 navigation.goBack()                                         
                             }} 
@@ -318,6 +354,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#2F80ED',
         flex: 1,
     },
+    ratingsWrapper:{
+        marginTop:20,
+        padding:20,
+        width:270,
+        borderColor:'grey',
+        borderWidth:1
+    },  
     container: {
         marginTop: 150,
         alignItems: 'center',
@@ -346,14 +389,17 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     backToHomeButton: {
-        marginTop: 100,
+        marginTop: 20,
         paddingTop: 20,
         paddingBottom: 20,
         color: 'white',
         textAlign: 'center',
-        borderRadius: 25,
+        borderRadius: 15,
         backgroundColor: '#2D9CDB',
-        fontSize: 18
+        fontSize: 18,
+        width:'100%',
+        backgroundColor:'grey',
+        marginBottom:20,
     },
 
 });

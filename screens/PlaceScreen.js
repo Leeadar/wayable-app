@@ -77,7 +77,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             if(data != null){
-                console.log(data)
+                //console.log(data)
                 try{
                 setReview1((data.reviews)[1])
                 setReview2((data.reviews)[2])
@@ -89,7 +89,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
                 catch{
                     console.log("ok")
                 }
-                console.log("red")
+               // console.log("red")
 
                 setPlace(data.place_id)
                 setDoor(data.door_access)
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingBottom:10,
         borderBottomColor:"#2e6990",
-        
+        marginTop:25
     },
     headImage:{
         width: 223,

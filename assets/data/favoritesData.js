@@ -1,9 +1,19 @@
+import { db } from '../../Core/Config';
+import * as React from 'react';
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
+
+
+
+
+
+
+
 const favoritsData = [
     {
         id: 1,
         image: require('../images/Habima-Squere.jpg'),
         title: 'Habima Square',
-        rate: '5',
+        rate: 3,
         selected: true,
     },
     {

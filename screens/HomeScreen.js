@@ -9,8 +9,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { YellowBox } from 'react-native-web';
 import recommendedPlaces from '../assets/data/RecommendedPlaces';
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
+import { db } from '../Core/Config';
 
 const HomeScreen = ({navigation})=>{
+    
+    const [averageRating, setAverageRating] = React.useState(3);
+
+    
 
     const renderFavoriteItem = ({item}) => {
         return (
@@ -23,6 +29,7 @@ const HomeScreen = ({navigation})=>{
               <Text style={styles.favoritesItemText}>{item.title}</Text>
                  <Text>
                       <View style={{flexDirection:'row', alignItems:'center'}}>
+                       
                          <Text style={styles.favoritesItemStarText}>{item.rate}</Text> 
                          <Image source={require('../assets/images/rate.png')} style={styles.favoritesStar} />
                      </View>
@@ -162,7 +169,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         paddingHorizontal:20,
-        marginTop:30,
+        marginTop:50,
         marginBottom:50,
             
     },

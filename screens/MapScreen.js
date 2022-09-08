@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         paddingLeft: 0,
         alignItems:'center',
+        marginTop:25
     },
     headImage:{
         width: 223,
