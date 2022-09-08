@@ -8,7 +8,7 @@ import highlyRatedData from '../assets/data/highlyRatedData';
 import { db } from '../Core/Config';
 import { getDatabase, ref, set, onValue, update } from "firebase/database";
 import { stringLength } from '@firebase/util';
-
+import reviewItemData from '../assets/data/reviewItemData';
 
 
 
@@ -31,16 +31,19 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [parking, setParking] = React.useState('');
     const [numOfRatings, setNumOfRatings] = React.useState('');
     const [averageRating, setAverageRating] = React.useState('');
-    const [review1,setReview1] = React.useState(["Poor accessibility"]);
-    const [review2,setReview2] = React.useState(["Easy to arrive!"]);
-    const [review3,setReview3] = React.useState(["Will be back soon!"]);
-    const [review4,setReview4] = React.useState(["Great Accessibility!"]);
-    const [review5,setReview5] = React.useState(["Toilets were clean af"]);
-    const [boli,setBoli] = React.useState(true)
+    const [dataReviews, setDataReviews] = React.useState('');
     
     //
-    
 
+    const renderReviewItem = ({item}) => {
+        return (
+            <View style={styles.textReviewlil}>
+                <View style={styles.reviewWrap}>
+                    <Text style={styles.textReview}>{item.review_text}</Text>
+                </View>
+            </View>
+        );
+     }
     // Suppose to add a new place to DB with , default values will be -1 , So the first rating will not calculate average with -1 value.
     function createData(placeName) {
         set(ref(db, 'places/' + placeName), {          
@@ -77,19 +80,6 @@ const  PlaceScreen =  ({ route, navigation })=>{
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
             if(data != null){
-                //console.log(data)
-                try{
-                setReview1((data.reviews)[1])
-                setReview2((data.reviews)[2])
-                setReview3((data.reviews)[3])
-                setReview4((data.reviews)[4])
-                setReview5((data.reviews)[5])
-
-                }
-                catch{
-                    console.log("ok")
-                }
-               // console.log("red")
 
                 setPlace(data.place_id)
                 setDoor(data.door_access)
@@ -100,7 +90,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
                 setWheelchair(data.wheelchair_access)
                 setAverageRating(data.averageRating)
                 setNumOfRatings(data.numOfRatings)
-               // console.log("successfuly retrieved " + place_id )
+                // setDataReviews(data.reviews)
                 
             }
             else{
@@ -141,7 +131,6 @@ const  PlaceScreen =  ({ route, navigation })=>{
                         style={styles.headImage}
                          />
                          </ImageBackground>
-                         
                     </View>
                 </SafeAreaView>
             
@@ -175,7 +164,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
                 <View style={{flex:1,height:1000}}>
 
-                    <ScrollView style={styles.ScrollStyle}>    
+                    <ScrollView style={styles.ScrollStyle}>
                     
                             <View style={styles.reviewsWrapper}>
 
@@ -237,46 +226,18 @@ const  PlaceScreen =  ({ route, navigation })=>{
                             </View> 
 
                             <View style={{backgroundColor:'white',}}>
-                                <Text style={styles.reviewsText}>Reviews:</Text>
+                                <Text style={styles.reviewsText}>{reviewItemData.length ? 'Reviews' : ''}</Text>
                             </View>
-
-                            <View  style={styles.textReviewsWrapper}>
-                                                              
-                                     
-                                            <View style={styles.textReviewlil} >
-                                                <View style={styles.reviewWrap}>
-                                                <Text style={styles.textReview}>"{review1}"</Text>                             
-                                                </View>
-                                            </View>
-                                            <View style={styles.textReviewlil} >
-                                                <View style={styles.reviewWrap}>
-                                                <Text style={styles.textReview}>"{review2}"</Text>                             
-                                                </View>
-                                            </View>
-                                            <View style={styles.textReviewlil} >
-                                                <View style={styles.reviewWrap}>
-                                                <Text style={styles.textReview}>"{review3}"</Text>                             
-                                                </View>
-                                            </View>
-                                            <View style={styles.textReviewlil} >
-                                                <View style={styles.reviewWrap}>
-                                                <Text style={styles.textReview}>"{review4}"</Text>                             
-                                                </View>
-                                            </View>
-                                       
-                       
-                            </View>     
-                       
-                    </ScrollView>                            
+                            <SafeAreaView>
+                                <FlatList
+                                    data={reviewItemData}
+                                    renderItem={renderReviewItem}
+                                    keyExtractor={(item) => item.id}
+                                    nestedScrollEnabled 
+                                />
+                            </SafeAreaView>
+                    </ScrollView>
                 </View>
-
-                
-                
- 
-
-
-
-
         </View>
     )
 };
@@ -294,7 +255,7 @@ const styles = StyleSheet.create({
         textShadowColor:"black",
         textShadowRadius:1,
         paddingBottom:10,
-        marginTop:100,
+        marginTop:92,
     },
     reviewWrap:{
         width:'70%',
@@ -366,8 +327,8 @@ const styles = StyleSheet.create({
     reviewWrapper:{
         marginRight:0,
         marginLeft:5,
-        marginTop:5,
-        width:'15%',
+        marginTop:7,
+        width:'15.4%',
         height:'70%',
         borderBottomColor:'green',
         flexDirection:'column',
@@ -525,7 +486,7 @@ const styles = StyleSheet.create({
         right:-2,
         top:0,
         width:'100%',
-        fontSize:24,
+        fontSize:23,
         letterSpacing: -0.5,
         fontWeight:"500",
         color:"#2e6990",
@@ -533,7 +494,7 @@ const styles = StyleSheet.create({
         opacity:0.8,
         textShadowColor:"black",
         textShadowRadius:1,
-        paddingBottom:10,
+        paddingBottom:3,
 
         
     },
