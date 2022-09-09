@@ -22,6 +22,7 @@ import { useSafeAreaFrame } from 'react-native-safe-area-context';
 const MapScreen = ({navigation})=>{
     
     const [buttonText, setButtonText] = React.useState("Please find a location")
+    const [photoReference, setPhotoReference] = React.useState("")
 
     function doChanges(text) {
         var ret = "Show '" + text + "'s Detials" 
@@ -41,6 +42,7 @@ const MapScreen = ({navigation})=>{
     const [name,setName] = React.useState("Please find a location")
   
     const [showButton,setShowButton] = React.useState(true)
+
 
     return (
 
@@ -73,8 +75,8 @@ const MapScreen = ({navigation})=>{
                 
 				onPress={(data, details=null) => {
 					// 'details' is provided when fetchDetails = true
-					
-                    
+					setPhotoReference(details.photos[0].photo_reference)
+                    console.log(details.photos[0].photo_reference)
 					setRegion({
 						latitude: details.geometry.location.lat,
 						longitude: details.geometry.location.lng,
@@ -120,7 +122,8 @@ const MapScreen = ({navigation})=>{
                 disabled={showButton}          
                 onPress={() => {
                             navigation.navigate("Place",{
-                                name:name
+                                name:name,
+                                photoReference:photoReference
                                 })
                          }}
             />   
@@ -141,7 +144,7 @@ const MapScreen = ({navigation})=>{
                     title={name}
                     description="This is your location!"
                     
-                     />
+                />
 
                 {/* <Marker 
                     coordinate={pin}

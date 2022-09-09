@@ -18,6 +18,8 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
     // replace ' ' with '_' in place's name (for example:"Azrieli Mall" => "Azrieli_Mall")
     const {name} = route.params;
+    const {photoReference} = route.params;
+
     var str = name;
     var replacedPlaceName = str.split(' ').join('_');
     
@@ -32,8 +34,18 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [numOfRatings, setNumOfRatings] = React.useState('');
     const [averageRating, setAverageRating] = React.useState('');
     const [dataReviews, setDataReviews] = React.useState('');
-    
+    const [placePhotoUrl, setPlacePhotoUrl] = React.useState('https://www.google.com/imgres?imgurl=https%3A%2F%2Frmc.co.ma%2Fwp-content%2Fthemes%2Fconsultix%2Fimages%2Fno-image-found-360x260.png&imgrefurl=https%3A%2F%2Frmc.co.ma%2Fcategory%2Fbusiness-services%2F&tbnid=lWVec5RfjFDSGM&vet=12ahUKEwib0dnn74f6AhULG-wKHahsB5AQMygAegUIARC_AQ..i&docid=DsMScMXzDN7UnM&w=360&h=260&itg=1&q=no%20photo%20found&ved=2ahUKEwib0dnn74f6AhULG-wKHahsB5AQMygAegUIARC_AQ');
     //
+
+    const setUrl = async() => {
+        const url=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference=${photoReference}&key=AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM`;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = () => {
+            setPlacePhotoUrl(xhr.responseURL)
+        };
+        xhr.send(null);
+      }
 
     const renderReviewItem = ({item}) => {
         return (
@@ -76,6 +88,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
     // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
     function readData(){
+        setUrl();
         const placeRef = ref(db, 'places/' + replacedPlaceName);
         onValue(placeRef, (snapshot) => {
             const data = snapshot.val();
@@ -133,10 +146,16 @@ const  PlaceScreen =  ({ route, navigation })=>{
                          </ImageBackground>
                     </View>
                 </SafeAreaView>
-            
+
                 {/* TODO : REQUIRE IMAGE FROM GOOGLE API */}
                 <View style={styles.placeImageWrapper}>
-                    <Image style={styles.imageStyle} source={require('../assets/images/no_image.png')} ></Image>
+                    {/* <Image style={styles.imageStyle} source={require('../assets/images/no_image.png')} ></Image> */}
+
+                <Image
+                    style={styles.imageStyle}
+                    source={{uri:placePhotoUrl}}
+                />
+
                 </View>
                 
                 <View style={styles.placeWrapper}>
@@ -461,11 +480,11 @@ const styles = StyleSheet.create({
     imageStyle:{
        // position:"absolute",
         
-        left: 30,
+
         top:0,
         borderRadius: 10,
-        width:'80%',
-        height:250,
+        width:'100%',
+        height:'100%',
         opacity:0.7,
         
         
