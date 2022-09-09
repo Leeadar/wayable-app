@@ -15,7 +15,7 @@ import { db } from '../Core/Config';
 const HomeScreen = ({navigation})=>{
     
     const [averageRating, setAverageRating] = React.useState(3);
-
+    const [photoReference, setPhotoReference] = React.useState("")
     
 
     const renderFavoriteItem = ({item}) => {
@@ -23,7 +23,7 @@ const HomeScreen = ({navigation})=>{
          <View style={styles.favoritesItemWrapper}>
              <TouchableOpacity 
                      onPress={()=>{
-                     navigation.navigate("Place",{name:item.title})}}
+                     navigation.navigate("Place",{name:item.title, photoReference:item.photoReference})}}
              >
              <Image source={item.image} style={styles.favoritesItemImage} />
               <Text style={styles.favoritesItemText}>{item.title}</Text>
@@ -65,7 +65,8 @@ const HomeScreen = ({navigation})=>{
 					        rankby: "distance"
 				                }}
 				            onPress={(data, details = null) => {
-                                navigation.navigate("Place",{name:details["name"]})
+                                setPhotoReference(details.photos[0].photo_reference)
+                                navigation.navigate("Place",{name:details["name"], photoReference:photoReference})
 				            }}
 				            query={{
 				        	key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM",
