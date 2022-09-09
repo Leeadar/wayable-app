@@ -43,18 +43,6 @@ const MapScreen = ({navigation})=>{
   
     const [showButton,setShowButton] = React.useState(true)
 
-    // const getPhotoUrl = async () => {
-    // try {
-    //     const response = await fetch(
-    //    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AeJbb3fVkhhzZH0BN1S21GRoSByIZEIq5hirvExXV77H4OXJ8dqceOcKHtC-olSgZphPr69MuQTMtm9sm9Zjy1IxCs5Tto0cpynkAc4dGBkkVDFpPIkFjJFwc5HpOd8MPGuKSW3VwlVzFTJ8l5V1Onr4-hEbFhXFJ5XI4ZFGL0HtF08cbzgW&key=AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM'
-    //     );
-    //     const image = await response.text();
-    //     console.log(image)
-    //     return image;
-    // } catch (error) {
-    //     console.error(error);
-    // }
-    // };
 
     return (
 
