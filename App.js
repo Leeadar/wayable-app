@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import MapScreen from './screens/MapScreen';
-import UserScreen from './screens/UserScreen';
 import PlaceScreen from './screens/PlaceScreen';
 import RatingScreen from './screens/RatingScreen';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
@@ -16,7 +15,6 @@ const Tab = createBottomTabNavigator();
 
 const homeName = "Home";
 const mapName = "Map";
-const userName = "User";
 const placeName = "Place";
 const ratingName = "Rating";
 
@@ -36,9 +34,6 @@ export default function App() {
             else if (rn === homeName) {
               iconName = focused ? 'home' : 'home-outline';
             }
-            else if (rn === userName) {
-              iconName = focused ? 'person' : 'person-outline';
-            } 
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -54,7 +49,6 @@ export default function App() {
 
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={mapName} component={MapScreen} />
-        <Tab.Screen name={userName} component={UserScreen}/>
         <Tab.Screen name={placeName} component={PlaceScreen}       
             options={() => ({
                 tabBarButton: () => null,

@@ -34,7 +34,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [numOfRatings, setNumOfRatings] = React.useState('');
     const [averageRating, setAverageRating] = React.useState('');
     const [dataReviews, setDataReviews] = React.useState('');
-    const [placePhotoUrl, setPlacePhotoUrl] = React.useState('https://www.google.com/imgres?imgurl=https%3A%2F%2Frmc.co.ma%2Fwp-content%2Fthemes%2Fconsultix%2Fimages%2Fno-image-found-360x260.png&imgrefurl=https%3A%2F%2Frmc.co.ma%2Fcategory%2Fbusiness-services%2F&tbnid=lWVec5RfjFDSGM&vet=12ahUKEwib0dnn74f6AhULG-wKHahsB5AQMygAegUIARC_AQ..i&docid=DsMScMXzDN7UnM&w=360&h=260&itg=1&q=no%20photo%20found&ved=2ahUKEwib0dnn74f6AhULG-wKHahsB5AQMygAegUIARC_AQ');
+    const [placePhotoUrl, setPlacePhotoUrl] = React.useState('https://worker4rent.ee/wp-content/themes/consultix/images/no-image-found-360x260.png');
     //
 
     const setUrl = async() => {
