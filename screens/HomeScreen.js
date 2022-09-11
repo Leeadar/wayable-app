@@ -9,14 +9,53 @@ import { NavigationContainer } from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { YellowBox } from 'react-native-web';
 import recommendedPlaces from '../assets/data/RecommendedPlaces';
-import { getDatabase, ref, set, onValue, update } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, query, orderByValue,limitToLast } from "firebase/database";
 import { db } from '../Core/Config';
 
+
+
+
+
+
+
 const HomeScreen = ({navigation})=>{
+
+    
+    
+    
     
     const [averageRating, setAverageRating] = React.useState(3);
     const [photoReference, setPhotoReference] = React.useState("")
     
+    function compare( a, b ) {
+        if ( a.averageRating < b.last_nom ){
+          return -1;
+        }
+        if ( a.last_nom > b.last_nom ){
+          return 1;
+        }
+        return 0;
+      }
+
+    function getData(){
+     
+        const placeRef = ref(db, 'places/' );
+        onValue(placeRef, (snapshot) => {
+            const data = snapshot.val();
+            if(data != null){
+                const places = Object.values(data)
+               
+                places.sort((a, b) => b.averageRating - a.averageRating);
+                places.forEach((e) => {
+                    if(e.averageRating > 0)
+                        console.log(e)})           
+            }        
+        })
+    }
+
+
+    
+    console.log(getData())
 
     const renderFavoriteItem = ({item}) => {
         return (
