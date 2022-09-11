@@ -33,10 +33,9 @@ const  PlaceScreen =  ({ route, navigation })=>{
     const [parking, setParking] = React.useState('');
     const [numOfRatings, setNumOfRatings] = React.useState('');
     const [averageRating, setAverageRating] = React.useState('');
-    const [dataReviews, setDataReviews] = React.useState([{}]);
+    const [dataReviews, setDataReviews] = React.useState('');
     const [placePhotoUrl, setPlacePhotoUrl] = React.useState('https://worker4rent.ee/wp-content/themes/consultix/images/no-image-found-360x260.png');
-    const [flag, setFlag] = React.useState(0);
-
+    //
 
     const setUrl = async() => {
         const url=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference=${photoReference}&key=AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM`;
@@ -52,7 +51,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
         return (
             <View style={styles.textReviewlil}>
                 <View style={styles.reviewWrap}>
-                    <Text style={styles.textReview}>{item["id"]}</Text>
+                    <Text style={styles.textReview}>{item.review_text}</Text>
                 </View>
             </View>
         );
@@ -87,30 +86,6 @@ const  PlaceScreen =  ({ route, navigation })=>{
     console.log(replacedPlaceName) // will print the fixed place name
 
 
-    function setReviews(){
-               
-        if (flag == 0){
-        const db = getDatabase();
-        const dbRef = ref(db, '/places/' + replacedPlaceName + '/reviews')
-        const res = []
-        onValue(dbRef, (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-            const childKey = childSnapshot.key;
-            const childData = childSnapshot.val();
-            console.log(childKey,'\n',childData["review_text"],'\n')
-            res.push({id: childKey , review: childData})
-            setDataReviews(dataReviews => ([...dataReviews, res]))
-            setFlag(flag + 1)
-        });
-        return res
-}, {
-  onlyOnce: true
-});
-
-        }
-    
-    }
-
     // for example: if data base will contain /places/Azrieli_Mall , Then replaced = "Azrieli_Mall". 
     function readData(){
         setUrl();
@@ -128,10 +103,8 @@ const  PlaceScreen =  ({ route, navigation })=>{
                 setWheelchair(data.wheelchair_access)
                 setAverageRating(data.averageRating)
                 setNumOfRatings(data.numOfRatings)
-                setReviews()
-
-
-                console.log(dataReviews)
+                // setDataReviews(data.reviews)
+                
             }
             else{
                 console.log("Need to update")
@@ -158,13 +131,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
         return ((door_access+parking+stairs_alternative+way_to_place+toilets+wheelchair_access)/6)
     }
    // console.log(averageRating)
-  React.useEffect(()=>{
-    readData()
-    if (flag == 5){
-        setFlag(0)
-        console.log("made it 0 ")
-    }
-     ; })
+  React.useEffect(()=>{ readData(); })
     
     return (
         
@@ -214,9 +181,9 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
 
 
-               
+                <View style={{flex:1,height:1000}}>
 
-                  
+                    <ScrollView style={styles.ScrollStyle}>
                     
                             <View style={styles.reviewsWrapper}>
 
@@ -279,19 +246,17 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
                             <View style={{backgroundColor:'white',}}>
                                 <Text style={styles.reviewsText}>{reviewItemData.length ? 'Reviews' : ''}</Text>
-                                
                             </View>
-                          
+                            <SafeAreaView>
                                 <FlatList
-                                    data={dataReviews}
+                                    data={reviewItemData}
                                     renderItem={renderReviewItem}
-                                    keyExtractor={(item) => item.id}                                   
-                                    //horizontal
-                                                                 
+                                    keyExtractor={(item) => item.id}
+                                    nestedScrollEnabled 
                                 />
-                          
-                  
-                
+                            </SafeAreaView>
+                    </ScrollView>
+                </View>
         </View>
     )
 };
@@ -309,7 +274,7 @@ const styles = StyleSheet.create({
         textShadowColor:"black",
         textShadowRadius:1,
         paddingBottom:10,
-        marginTop:5,
+        marginTop:92,
     },
     reviewWrap:{
         width:'70%',
@@ -337,7 +302,7 @@ const styles = StyleSheet.create({
     },
     textReviewlil:{
         
-        width:'80%',
+        width:'100%',
         backgroundColor:"lightcyan",
         borderStartColor:'white',
         borderEndColor:'white',
