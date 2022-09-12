@@ -301,7 +301,7 @@ const RatingScreen = ({ route, navigation }) => {
                         <TouchableOpacity 
                             onPress={() => {
                              //   console.log("Average Values:\n")
-                                
+                                console.log(door_access)
                                 //printData() // Print data AFTER changes
                                 updateData() // Update new data to DB
                                 setRatingIndex(0) // Reset rating's list index
@@ -309,7 +309,7 @@ const RatingScreen = ({ route, navigation }) => {
                                 setSubmitButton(false) // Make CONFIRM button pressable
                                 setBackButton(true) // Make BACK button unpressable
                                 setConfirmed("Click to confirm!")
-                                console.log(review_text)
+                                
                                 Alert.alert( "Thank you!","Successfuly sent review!")
 
                                 navigation.goBack()                                         
