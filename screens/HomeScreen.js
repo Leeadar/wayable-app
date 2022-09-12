@@ -13,17 +13,7 @@ import { getDatabase, ref, set, onValue, update, query, orderByValue,limitToLast
 import { db } from '../Core/Config';
 
 
-
-
-
-
-
 const HomeScreen = ({navigation})=>{
-
-    
-    
-    
-    
     const [averageRating, setAverageRating] = React.useState(3);
     const [photoReference, setPhotoReference] = React.useState("")
     
@@ -83,12 +73,9 @@ const HomeScreen = ({navigation})=>{
         <View style={styles.container}>
              <SafeAreaView>
                     <View style={styles.headWrapper}>
-                        <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
-                        <Image source={require('../assets/images/Wayable3.png')}
+                        <Image source={require('../assets/images/Wayable.png')}
                         style={styles.headImage}
-                         />
-                         </ImageBackground>
-                         
+                         />     
                     </View>
                 </SafeAreaView>
                 <SafeAreaView>
@@ -102,13 +89,13 @@ const HomeScreen = ({navigation})=>{
                             enablePoweredByContainer={false}
 				            GooglePlacesSearchQuery={{
 					        rankby: "distance"
-				                }}
+                            }}
 				            onPress={(data, details = null) => {
                                 setPhotoReference(details.photos[0].photo_reference)
                                 navigation.navigate("Place",{name:details["name"], photoReference:photoReference})
 				            }}
 				            query={{
-				        	key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM",
+				        	key: "AIzaSyAgQEoppUMU2a9-ZNWs_4l14KrDWsFcKHc",
 					        language: "he",
 					        components: "country:il",
 					        types: "establishment",
@@ -117,7 +104,7 @@ const HomeScreen = ({navigation})=>{
 				            styles={{
 				            	container: { flex: 0, zIndex: 1, position: "absolute", width: "100%"},
                                 textInput: {height:50,backgroundColor:"#F6F6F6", fontSize: 16, borderRadius:30},
-                                    }}
+                            }}
 		            	/>
                     </View>
                 </View>
@@ -211,7 +198,6 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         marginTop:50,
         marginBottom:50,
-            
     },
     favoritesContainer:{
         flex:1,
@@ -234,7 +220,6 @@ const styles = StyleSheet.create({
     favoritesItemImage:{
         width: 110,
         height: 110,
-        
         marginTop: 10,
         backgroundColor:'#2F80ED',
         borderRadius:10,

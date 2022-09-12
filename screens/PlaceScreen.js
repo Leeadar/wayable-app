@@ -39,7 +39,7 @@ const  PlaceScreen =  ({ route, navigation })=>{
 
 
     const setUrl = async() => {
-        const url=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference=${photoReference}&key=AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM`;
+        const url=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference=${photoReference}&key=AIzaSyAgQEoppUMU2a9-ZNWs_4l14KrDWsFcKHc`;
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.onload = () => {
@@ -172,11 +172,9 @@ const  PlaceScreen =  ({ route, navigation })=>{
                {/* Header */}
                <SafeAreaView>
                     <View style={styles.headWrapper}>
-                        <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
-                        <Image source={require('../assets/images/Wayable3.png')}
+                        <Image source={require('../assets/images/Wayable.png')}
                         style={styles.headImage}
                          />
-                         </ImageBackground>
                     </View>
                 </SafeAreaView>
 
