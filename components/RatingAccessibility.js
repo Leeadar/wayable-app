@@ -12,7 +12,6 @@ class RatingAccessibility extends Component {
   }
  
   onStarRatingPress(rating) {
-    
     this.setState({
       starCount: rating
     });
@@ -35,8 +34,8 @@ class RatingAccessibility extends Component {
             rating={this.state.starCount}
             selectedStar={(rating) => 
               this.onStarRatingPress(rating)
-              }
-            fullStarColor={'#FFB84E'}
+            }
+            fullStar={require('../assets/images/star.png')}
           />
           <View style={{flexDirection:"row", alignItems:"center"}}>
             <TouchableOpacity 

@@ -50,7 +50,7 @@ const RatingScreen = ({ route, navigation }) => {
     const [ratingIndex, setRatingIndex] = React.useState(0);
     const [showingRatingAccessibility, setShowingRatingAccessibility] = React.useState(true);
     const [submited, setSubmited] = React.useState(false)
-    const [confirmed, setConfirmed] = React.useState("Click to confirm!")
+    const [confirmed, setConfirmed] = React.useState("Confirm Review")
     const [review_text, onChangeText] = React.useState("Enter review here");
     const [number, onChangeNumber] = React.useState(null);
     const [reviews, setReviews] = React.useState('');
@@ -251,21 +251,22 @@ const RatingScreen = ({ route, navigation }) => {
                     <View>
                         <View style={styles.ratingsWrapper}>
                         {/* /Here set the data object on data base */}
-                        <Text style={styles.header}>Thank you!</Text>
-                        <Text>Parking: {parkingStars}</Text>
-                        <Text>WheelChair Accessibility: {wheelchairStars}</Text>
-                        <Text>Way to place : {wayStars}</Text>
-                        <Text>Door Accessibility: {doorStars}</Text>
-                        <Text>Stairs Alternative: {stairsStars}</Text>
-                        <Text>Toilets: {toiletStars}</Text>
+                        <Text style={styles.header}>You Are Awesome!</Text>
+                        <Text style={styles.singleRate}>Parking: {parkingStars}</Text>
+                        <Text style={styles.singleRate}>WheelChair Accessibility: {wheelchairStars}</Text>
+                        <Text style={styles.singleRate}>Way to place : {wayStars}</Text>
+                        <Text style={styles.singleRate}>Door Accessibility: {doorStars}</Text>
+                        <Text style={styles.singleRate}>Stairs Alternative: {stairsStars}</Text>
+                        <Text style={styles.singleRate}>Toilets: {toiletStars}</Text>
                         </View>
                         
                         <TextInput
-                            style={styles.input}
-                            
+                            style={styles.reviewInput}
+                            multiline={true}
+                            numberOfLines={4}
                             onChangeText={newText => onChangeText(newText)}
                             value={number}
-                            placeholder="Enter review here"
+                            placeholder=" Enter review here"
                             //keyboardType="numeric"
                             disabled={backButton}
                             
@@ -285,7 +286,7 @@ const RatingScreen = ({ route, navigation }) => {
                         }} 
                         disabled={submitButton}
                         >
-                            <Text style={{    marginTop: 100,
+                            <Text style={{    marginTop: 20,
                                     paddingTop: 20,
                                     paddingBottom: 20,
                                     color:'white',
@@ -315,35 +316,11 @@ const RatingScreen = ({ route, navigation }) => {
                             }} 
                             disabled={backButton}
                             style={styles.button}>
-                            <Text style={styles.backToHomeButton}>Submit and Back to home</Text>
+                            <Text style={styles.backToHomeButton}>Submit Review</Text>
                         </TouchableOpacity>
                     </View>
                 }
             </View>
-            {/* <Text style={styles.header}>{name}</Text>
-
-            <Text  style={styles.title}>{currentRatingAccessibility.accessibilityTitle}</Text>
-            <RatingAccessibility setStarRating={setStarRating} setRatingItem={currentRatingAccessibility.setRatingItem}/>
-
-            <Text>{parkingStars}</Text>
-            <Text>{wheelchairStars}</Text>
-            <Text>{stairsStars}</Text>
-            <Text>{toiletStars}</Text>  */}
-            {/* <Text  style={styles.title}>{"How was the parking?"}</Text>
-            <RatingAccessibility setStarRating={setStarRating} setRatingItem={setParkingStars}/>
-            <Text>{parkingStars}</Text>
-
-            <Text  style={styles.title}>{"Was there wheelchair access?"}</Text>
-            <RatingAccessibility setStarRating={setStarRating} setRatingItem={setWheelchairStars}/>
-            <Text>{wheelchairStars}</Text>
-
-            <Text  style={styles.title}>{"Was there a stairs alternative?"}</Text>
-            <RatingAccessibility setStarRating={setStarRating} setRatingItem={setStairsStars}/>
-            <Text>{stairsStars}</Text>
-
-            <Text  style={styles.title}>{"Was there an accessible toilet?"}</Text>
-            <RatingAccessibility setStarRating={setStarRating} setRatingItem={setToiletStars}/>
-            <Text>{toiletStars}</Text> */}
         </View>
     )
 };
@@ -355,12 +332,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     ratingsWrapper:{
-        marginTop:20,
-        padding:20,
+        marginTop:30,
+        marginBottom: 20,
+        padding:0,
         width:270,
-        borderColor:'grey',
-        borderWidth:1
-    },  
+    },
+    singleRate:{
+        fontSize: 18,
+    },
     container: {
         marginTop: 150,
         alignItems: 'center',
@@ -373,11 +352,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 20,
         alignSelf: 'center',
-
     },
     header: {
-        fontSize: 30,
-        marginBottom: 10,
+        fontSize: 28,
+        marginBottom: 20,
         fontWeight: 'bold',
         alignSelf: 'center',
         marginTop: 10
@@ -398,8 +376,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#2D9CDB',
         fontSize: 18,
         width:'100%',
-        backgroundColor:'grey',
+        backgroundColor:'#0029ff',
         marginBottom:20,
+        borderRadius: 25,
+    },
+    reviewInput: {
+        fontSize: 18,
+        borderWidth: 1,
+        borderRadius: 8,
+        textAlignVertical: 'top',
     },
 
 });

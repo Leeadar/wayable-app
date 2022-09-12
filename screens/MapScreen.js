@@ -30,39 +30,35 @@ const MapScreen = ({navigation})=>{
 
     }
     const [pin,setPin] = React.useState({
-        latitude: 32.011261,
-        longitude: 34.774811,
+        latitude: 32.0474870,
+        longitude: 34.7607540,
     })
     const [region,setRegion] = React.useState({
-        latitude: 32.011261,
-        longitude: 34.774811,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitude: 32.0474870,
+        longitude: 34.7607540,
+        latitudeDelta: 0.0022,
+        longitudeDelta: 0.0271
     })
     const [name,setName] = React.useState("Please find a location")
   
     const [showButton,setShowButton] = React.useState(true)
 
-
     return (
+        <View style={{backgroundColor:"#FFFFFF", flex: 1}} > 
 
-        <View > 
-                     {/* Header Image */}
+                {/* Header Image */}
 
-                     <SafeAreaView>
-                    <View style={styles.headWrapper}>
-                        <ImageBackground style={styles.backgroundTitle} resizeMode='cover' source={require('../assets/images/background.jpg')}>
-                        <Image source={require('../assets/images/Wayable3.png')}
-                        style={styles.headImage}
-                         />
-                         </ImageBackground>
-                         
-                    </View>
-                </SafeAreaView>
-             
-       <View style={{marginTop:0,flex: 1,marginBottom:45}}>
+            <SafeAreaView>
+                <View style={styles.headWrapper}>
+                    <Image source={require('../assets/images/Wayable.png')}
+                    style={styles.headImage}
+                        />  
+                </View>
+            </SafeAreaView>
+            
+       <View style={{marginTop:0, flex: 1, marginBottom:50, marginTop:35, paddingHorizontal:20, alignItems:'center'}}>
                                                                             
-                     {/* Google Search Bar */}
+            {/* Google Search Bar */}
             <GooglePlacesAutocomplete
                 style={styles.SearchBar}    
 				placeholder="Search"
@@ -80,26 +76,23 @@ const MapScreen = ({navigation})=>{
 					setRegion({
 						latitude: details.geometry.location.lat,
 						longitude: details.geometry.location.lng,
-						latitudeDelta: 0.0922,
-						longitudeDelta: 0.0421
+                        latitudeDelta: 0.0022,
+                        longitudeDelta: 0.0271
 					})
                     
                     setPin({
 						latitude: details.geometry.location.lat,
 						longitude: details.geometry.location.lng,
-						latitudeDelta: 0.0922,
-						longitudeDelta: 0.0421
+                        latitudeDelta: 0.0022,
+                        longitudeDelta: 0.0271
 					})
-
                     setName(details["name"])    
                     setShowButton(false)
                     doChanges(details["name"])
-                    
-                    
 				}}               
                 
 				query={{
-					key: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM", // My google cloud api (Nati)
+					key: "AIzaSyAgQEoppUMU2a9-ZNWs_4l14KrDWsFcKHc", // My google cloud api (Nati)
 					language: "en",
 					components: "country:il",
 					types: "establishment",
@@ -112,7 +105,7 @@ const MapScreen = ({navigation})=>{
 
 				styles={{
 					container: { flex: 0, position: "absolute", width: "100%", zIndex: 1 },
-					listView: { backgroundColor: "white" }
+                    textInput: {height:50,backgroundColor:"#F6F6F6", fontSize: 16, borderRadius:30},
 				}}
 			/>           
            </View> 
@@ -128,12 +121,6 @@ const MapScreen = ({navigation})=>{
                          }}
             />   
           <MapView style={styles.map} 
-            //   initialRegion={{
-            //     latitude: 32.011261,
-            //     longitude:  34.774811,
-            //     latitudeDelta: 0.0922,
-            //     longitudeDelta: 0.0421,
-            //   }}
               region={region}
               provider="google"
               onRegionChangeComplete={setRegion}
@@ -145,25 +132,6 @@ const MapScreen = ({navigation})=>{
                     description="This is your location!"
                     
                 />
-
-                {/* <Marker 
-                    coordinate={pin}
-                    pinColor="blue"
-                    draggable={true}
-                    onDragStart={(e)=>{
-                        console.log("Drag Start", e.nativeEvent.coordinate)
-                    }}
-                    onDragEnd={(e)=>{
-                        setPin({
-                            latitude: e.nativeEvent.coordinate.latitude,
-                            longitude: e.nativeEvent.coordinate.longitude
-                        })
-                    }}
-                    >
-                        <Callout>
-                            <Text>I'm right here!</Text>
-                        </Callout>
-                   </Marker>                         */}
             </MapView>
 
             </View>                              
@@ -183,7 +151,7 @@ const styles = StyleSheet.create({
     },
     map: {
       width: Dimensions.get('window').width ,
-      height: Dimensions.get('window').height - 250
+      height: Dimensions.get('window').height - 170
     },
     backgroundTitle:{
         width:'100%',
@@ -203,7 +171,7 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         paddingLeft: 0,
         alignItems:'center',
-        marginTop:25
+        marginTop:5
     },
     headImage:{
         width: 223,
@@ -218,7 +186,7 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     SearchBar:{
-        backgroundColor:"#e0ffff"
+        backgroundColor:"#F6F6F6"
     },
         
   });
