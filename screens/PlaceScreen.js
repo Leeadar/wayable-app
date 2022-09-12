@@ -14,7 +14,7 @@ import { useIsFocused } from '@react-navigation/native'
 
 
 
-// Recieve place id as parameter
+// Recieve place id as parameter s
 const PlaceScreen = ({ route, navigation }) => {
 
     // replace ' ' with '_' in place's name (for example:"Azrieli Mall" => "Azrieli_Mall")
