@@ -76,9 +76,7 @@ const PlaceScreen = ({ route, navigation }) => {
             wheelchair_access: 0,
             numOfRatings: 0,
             averageRating: 0,
-            reviews: ["check", "if entered"],
-
-
+            reviews: [],
         }).then(() => {
             alert('Added new place to our database!');
         })
@@ -177,7 +175,7 @@ const PlaceScreen = ({ route, navigation }) => {
             {/* Place Name - Average Rating - Rate Place! */}
             <View style={styles.placeWrapper}>
                 <View style={styles.placeWrapperLEFT}>
-                    <Text style={styles.placeNameStyle}>{name}</Text>
+                    <Text numberOfLines={2} style={styles.placeNameStyle}>{name.slice(0,20)}</Text>
                     <Text style={styles.ratingText}>{averageRating}</Text>
                     <Image style={styles.ratingImage} source={require('../assets/images/rate.png')}></Image>
                 </View>
@@ -259,7 +257,7 @@ const PlaceScreen = ({ route, navigation }) => {
 
             {/* Text Reviews */}
             <View style={{ backgroundColor: 'white', }}>
-                <Text style={styles.reviewsText}>{reviewItemData.length ? 'Reviews' : ''}</Text>
+                <Text style={styles.reviewsText}>{dataReviews.length ? 'Reviews' : ''}</Text>
 
             </View>
 
@@ -279,19 +277,18 @@ const PlaceScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     reviewsText: {
         marginRight: 2,
-        fontSize: 24,
+        fontSize: 26,
         letterSpacing: -0.5,
         fontWeight: "500",
-        color: "#2e6990",
+        color: "#2F80ED",
         textAlign: "center",
         opacity: 1,
-        textShadowColor: "black",
         textShadowRadius: 1,
-        paddingBottom: 10,
+        paddingBottom: 5,
         marginTop: 5,
     },
     reviewWrap: {
-        width: '100%',
+        width: '75%',
         backgroundColor: 'white',
         height: 60,
         alignContent: 'center',
@@ -300,7 +297,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderColor: 'grey',
         borderWidth: 1,
-
     },
     reviewsWrapper: {
         width: '100%',
@@ -315,9 +311,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     textReviewlil: {
-
-        width: '80%',
-        backgroundColor: "lightcyan",
+        width: '100%',
+        backgroundColor: "#2F80ED",
         borderStartColor: 'white',
         borderEndColor: 'white',
         borderStartWidth: 5,
