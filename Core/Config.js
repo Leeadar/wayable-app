@@ -7,15 +7,26 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// process.env.
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM",
+//   authDomain: "wayable.firebaseapp.com",
+//   databaseURL: "https://wayable-default-rtdb.europe-west1.firebasedatabase.app",
+//   projectId: "wayable",
+//   storageBucket: "wayable.appspot.com",
+//   messagingSenderId: "792649488358",
+//   appId: "1:792649488358:web:feeb35a1b753c5aa18a827",
+//   measurementId: "G-LRFNG87GJ4"
+// };
 const firebaseConfig = {
-  apiKey: "AIzaSyA0ozFb2HQGkLS5O4_UOo5glqCKPFZrcQM",
-  authDomain: "wayable.firebaseapp.com",
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
   databaseURL: "https://wayable-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "wayable",
-  storageBucket: "wayable.appspot.com",
-  messagingSenderId: "792649488358",
-  appId: "1:792649488358:web:feeb35a1b753c5aa18a827",
-  measurementId: "G-LRFNG87GJ4"
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId,
+  measurementId: process.env.measurementId
 };
 
 // Initialize Firebase
